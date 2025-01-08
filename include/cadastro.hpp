@@ -8,7 +8,7 @@
 class cadastro{
     private:
     int _QuantidadeJogadores;
-    std::vector<jogador*> _MeuCadastro;
+    std::vector<jogador> _MeuCadastro;
 
     public:
     cadastro();

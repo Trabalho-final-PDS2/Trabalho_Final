@@ -1,0 +1,28 @@
+CC=g++
+CFLAGS=-std=c++11 -Wall -g
+TARGET=testelogin
+SRC_DIR=./src
+TESTS_DIR=./tests
+INCLUDE_DIR=./include
+BUILD_DIR=./obj
+BIN_DIR=./bin
+# Regra principal, compilando o executável a partir dos objetos
+all: $(BIN_DIR) $(BIN_DIR)/$(TARGET)
+
+# Regra para compilar o executável, a partir dos arquivos objetos
+$(BIN_DIR)/$(TARGET): $(BUILD_DIR)/cadastro.o $(BUILD_DIR)/onibus.o $(BUILD_DIR)/testelogin.o
+	$(CC) $(CFLAGS) -o ${TARGET} $(BUILD_DIR)/cadastro.o $(BUILD_DIR)/onibus.o $(BUILD_DIR)/testelogin.o
+
+# Regras para compilar cada arquivo objeto individualmente
+$(BUILD_DIR)/cadastro.o: $(INCLUDE_DIR)/cadastro.hpp $(SRC_DIR)/cadastro.cpp
+	$(CC) $(CFLAGS) -I $(INCLUDE_DIR) -c $(SRC_DIR)/cadastro.cpp -o $(BUILD_DIR)/cadastro.o
+
+$(BUILD_DIR)/jogador.o: $(INCLUDE_DIR)/jogador.hpp $(SRC_DIR)/jogador.cpp
+	$(CC) $(CFLAGS) -I $(INCLUDE_DIR) -c $(SRC_DIR)/jogador.cpp -o $(BUILD_DIR)/jogador.o
+
+$(BUILD_DIR)/testelogin.o: $(INCLUDE_DIR)/cadastro.hpp $(INCLUDE_DIR)/jogador.hpp $(TESTS_DIR)/testelogin.cpp
+	$(CC) $(CFLAGS) -I $(INCLUDE_DIR) -c $(TESTS_DIR)/testelogin.cpp -o $(BUILD_DIR)/testelogin.o
+
+# Regra para limpar arquivos de compilação
+clean:
+	rm -f $(BUILD_DIR)/*
