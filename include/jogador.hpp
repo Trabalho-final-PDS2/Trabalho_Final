@@ -9,8 +9,8 @@ class jogador{
     int vitorias[3],derrotas[3];
 
     public:
-    jogador(std::string nome, std::string apelido) : _nome(nome), _apelido(apelido) {};
-    jogador(std::string nome, std::string apelido, int vitorias[], int derrotas[]) : _nome(nome), _apelido(apelido) {};
+    jogador(std::string nome, std::string apelido);
+    jogador(std::string nome, std::string apelido, int vitorias[], int derrotas[]);
     std::string GetNome() const;
     std::string GetApelido() const;
     std::string GetEstatisticas() const;
