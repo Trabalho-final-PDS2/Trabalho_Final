@@ -65,52 +65,51 @@ cadastro::~cadastro(){ //o destrutor de cadastro tenta salvar os novos cadastros
     }   
 }
 
-
-bool cadastro::CadastraJogador(std::string nome, std::string apelido){
+int cadastro::VerificaApelido(std::string apelido){
     for (size_t i = 0; i < _MeuCadastro.size(); i++){
         if(_MeuCadastro[i].GetApelido() == apelido){
-            std::cout << "Erro: Apelido nao disponivel" << std::endl;
-            return false;
+            return i;
         }
     }
-    jogador adiciona(nome,apelido);
-    _MeuCadastro.push_back(adiciona);
-    std::cout << "Jogador " << apelido << " cadastrado com sucesso" << std::endl;
-    return true;
+    return -1;
 }
 
 
-bool cadastro::DeletaJogador(std::string apelido){
-    for (size_t i = 0; i < _MeuCadastro.size(); i++){
-        if(_MeuCadastro[i].GetApelido() == apelido){
-           _MeuCadastro.erase(_MeuCadastro.begin() + i);
-            std::cout << "Jogador " << apelido << " deletado com sucesso" << std::endl;
-            return true;
-
-        }
+void cadastro::CadastraJogador(std::string nome, std::string apelido){
+    if(VerificaApelido(apelido) != -1){
+        std::cout << "Erro: Apelido nao disponivel" << std::endl;
     }
-    std::cout << "Erro: jogador " << apelido << " nao cadastrado" << std::endl;
-    return false;
+    else{
+        jogador adiciona(nome,apelido);
+        _MeuCadastro.push_back(adiciona);
+        std::cout << "Jogador " << apelido << " cadastrado com sucesso" << std::endl;
+    }
 }
 
 
-bool cadastro::EditaJogador(std::string apelido, std::string novoapelido){
-    for (size_t i = 0; i < _MeuCadastro.size(); i++){
-        if(_MeuCadastro[i].GetApelido() == novoapelido){
-            std::cout << "Erro: apelido " << novoapelido << " nao disponivel" << std::endl;
-            return false;
-        }
+void cadastro::DeletaJogador(std::string apelido){
+    int indice = VerificaApelido(apelido);
+    if(indice != -1){
+        _MeuCadastro.erase(_MeuCadastro.begin() + indice);
+        std::cout << "Jogador " << apelido << " deletado com sucesso" << std::endl;
+    }
+    else{
+        std::cout << "Erro: jogador " << apelido << " nao cadastrado" << std::endl;
+    }
+}
+
+
+void cadastro::EditaJogador(std::string apelido, std::string novoapelido){
+    int indice = VerificaApelido(novoapelido);
+    if(indice == -1){
+        indice = VerificaApelido(apelido);
+        _MeuCadastro[indice].SetApelido(novoapelido);
+        std::cout << "Jogador " << apelido << " editado com sucesso para " << novoapelido << std::endl;
     }
 
-    for (size_t i = 0; i < _MeuCadastro.size(); i++){
-        if(_MeuCadastro[i].GetApelido() == apelido){
-            _MeuCadastro[i].SetApelido(novoapelido);
-            std::cout << "Jogador " << apelido << " editado com sucesso para " << novoapelido << std::endl;
-            return true;
-        }
+    else{
+        std::cout << "Erro: apelido " << novoapelido << " nao disponivel" << std::endl;
     }
-    std::cout << "Erro: jogador " << apelido << " nao cadastrado" << std::endl;
-    return false;
 }
 
 
@@ -121,6 +120,13 @@ void cadastro::Imprime() {
 
     for(size_t i = 0; i < _MeuCadastro.size(); i++){
         _MeuCadastro[i].Imprime();
+    }
+}
+
+
+void cadastro::ExibeApelidos(){
+    for(size_t i = 0; i < _MeuCadastro.size(); i++){
+        std::cout<< _MeuCadastro[i].GetApelido() << std::endl;
     }
 }
        

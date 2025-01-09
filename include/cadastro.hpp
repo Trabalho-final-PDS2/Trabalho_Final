@@ -12,10 +12,12 @@ class cadastro{
     public:
     cadastro();
     ~cadastro();
-    bool CadastraJogador(std::string nome, std::string apelido);
-    bool DeletaJogador(std::string apelido);
-    bool EditaJogador(std::string apelido, std::string novoapelido);
+    void CadastraJogador(std::string nome, std::string apelido);
+    void DeletaJogador(std::string apelido);
+    void EditaJogador(std::string apelido, std::string novoapelido);
+    int VerificaApelido(std::string apelido);
     void Imprime();
+    void ExibeApelidos();
 };
     
 
