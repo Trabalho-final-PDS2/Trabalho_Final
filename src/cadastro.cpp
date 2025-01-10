@@ -6,7 +6,7 @@
 #include <algorithm>
 
 cadastro::cadastro(){ // o construtor de cadastro tenta pegar os cadastros salvos no arquivo txt e inicaliza-los
-    std::ifstream cadastro("cadastro.txt");
+    std::ifstream cadastro("../data/cadastro.txt");
     if(cadastro.is_open()){
         std::string linha, lixo, nome, apelido, palavra;
         int vitorias[3], derrotas [3];
@@ -40,7 +40,7 @@ cadastro::cadastro(){ // o construtor de cadastro tenta pegar os cadastros salvo
 
 cadastro::~cadastro(){ //o destrutor de cadastro tenta salvar os novos cadastros em um arquivo txt temporario, deletar o antigo e renomear o temporario para cadastro
     std::string nome, apelido, estatisticas, linha;
-    std::ofstream temporario("temporario.txt");
+    std::ofstream temporario("../data/temporario.txt");
     if(temporario.is_open()){
         for(size_t i = 0; i < _MeuCadastro.size(); i++){
             linha="";
@@ -52,11 +52,11 @@ cadastro::~cadastro(){ //o destrutor de cadastro tenta salvar os novos cadastros
         }
         temporario.close();
 
-        if(remove("cadastro.txt") != 0){
+        if(remove("../data/cadastro.txt") != 0){
             std::cerr << "Erro ao deletar arquivo antigo de cadastro" << std::endl;
         }
 
-        if(rename("temporario.txt", "cadastro.txt") != 0){
+        if(rename("../data/temporario.txt", "../data/cadastro.txt") != 0){
             std::cerr << "Erro ao renomear novo arquivo de cadastro" << std::endl;
         }
     }
