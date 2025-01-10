@@ -45,12 +45,21 @@ void jogador::SetApelido(std::string novoapelido){
     this->_apelido = novoapelido;
 }
 
+void jogador::SetEstatistica(int V_D){
+    if(V_D > 0){
+        this->vitorias[V_D]++;
+    }
+    else{
+        this->derrotas[-V_D]++;
+    }
+}
+
 void jogador::Imprime() const {
     std::cout << this->_apelido << " (" << this->_nome << ")" <<std::endl;
     std::cout << "Vitorias -> ";
-    std::cout << "Reversi: " << this->vitorias[0] << " / Lig4: " << this->vitorias[1] << " / Jogo da velha: " << this->vitorias[2];
+    std::cout << "Jogo da velha: " << this->vitorias[0] << " / Lig4: " << this->vitorias[1] << " / Reversi: " << this->vitorias[2];
     std::cout << std::endl;
     std::cout << "Derrotas -> ";
-    std::cout << "Reversi: " << this->derrotas[0] << " / Lig4: " << this->derrotas[1] << " / Jogo da velha: " << this->derrotas[2];
+    std::cout << "Jogo da velha: " << this->derrotas[0] << " / Lig4: " << this->derrotas[1] << " / Reversi: " << this->derrotas[2];
     std::cout << std::endl << std::endl;
 }

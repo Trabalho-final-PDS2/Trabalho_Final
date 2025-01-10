@@ -1,5 +1,5 @@
-#ifndef JOGADOR_H
-#define JOGADOR_H
+#ifndef JOGADOR_HPP
+#define JOGADOR_HPP
 #include<iostream>
 #include<string>
 
@@ -16,6 +16,7 @@ class jogador{
     std::string GetEstatisticas() const;
     void SetNome(std::string nome);
     void SetApelido(std::string novoapelido);
+    void SetEstatistica(int V_D);
     void Imprime() const;
 };
 #endif
