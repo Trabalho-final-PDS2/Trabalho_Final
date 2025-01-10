@@ -1,11 +1,13 @@
 #include <iostream>
 #include "cadastro.hpp"
+#include "tictactoe.hpp"
 #include <string>
 #include <sstream>
 #include <thread>
 #include <chrono>
 
 void menu(){
+
     std::this_thread::sleep_for(std::chrono::seconds(2));
     std::cout<<std::endl;
     std::cout<< "Digite:" <<std::endl;
@@ -18,8 +20,11 @@ void menu(){
 
 int main(){
     cadastro meucadastro;
-    std::string nome, apelido, novoapelido, linha;
+    std::string nome, apelido, novoapelido, linha, teste;
     char comando;
+    std::cout<< "Deseja abrir o menu de cadastro?" << std::endl;
+    getline(std::cin,teste);
+    if (teste == "s"){
     menu();
     while(std::cin >> linha){
         std::istringstream input(linha);
@@ -106,4 +111,23 @@ int main(){
         }
         menu();
     }
+    }else {
+    game::TicTacToe games;
+
+    int position;
+    while (true) {
+        games.PrintBoard();
+        std::cout << "Jogador " << (games.currentPlayer ? 1 : 2) << ", enter a position (0-8): ";
+        std::cin >> position;
+
+        games.playerMove(position, games.currentPlayer);
+        games.CheckGameStatus();
+
+        // Se o jogo terminou, saia
+        if (games.CheckWin() || games.CheckTie()) {
+            break;
+        }
+    }
+    }
+    return 0;
 }
