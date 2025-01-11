@@ -18,8 +18,8 @@ $(BUILD_DIR):
 	mkdir -p $(BUILD_DIR)
 
 # Regra para compilar o executável, a partir dos arquivos objetos
-$(BIN_DIR)/$(TARGET): $(BUILD_DIR)/cadastro.o $(BUILD_DIR)/jogador.o $(BUILD_DIR)/login.o $(BUILD_DIR)/board.o $(BUILD_DIR)/tictactoe.o $(BUILD_DIR)/modulo_cadastro.o
-	$(CC) $(CFLAGS) -o $(BIN_DIR)/$(TARGET) $(BUILD_DIR)/cadastro.o $(BUILD_DIR)/jogador.o $(BUILD_DIR)/login.o $(BUILD_DIR)/board.o $(BUILD_DIR)/tictactoe.o $(BUILD_DIR)/modulo_cadastro.o
+$(BIN_DIR)/$(TARGET): $(BUILD_DIR)/cadastro.o $(BUILD_DIR)/jogador.o $(BUILD_DIR)/login.o $(BUILD_DIR)/board.o $(BUILD_DIR)/tictactoe.o $(BUILD_DIR)/reversi.o $(BUILD_DIR)/modulo_cadastro.o
+	$(CC) $(CFLAGS) -o $(BIN_DIR)/$(TARGET) $(BUILD_DIR)/cadastro.o $(BUILD_DIR)/jogador.o $(BUILD_DIR)/login.o $(BUILD_DIR)/board.o $(BUILD_DIR)/tictactoe.o $(BUILD_DIR)/reversi.o $(BUILD_DIR)/modulo_cadastro.o
 
 # Regras para compilar cada arquivo objeto individualmente
 $(BUILD_DIR)/cadastro.o: $(INCLUDE_DIR)/cadastro.hpp $(SRC_DIR)/cadastro.cpp
@@ -36,6 +36,9 @@ $(BUILD_DIR)/board.o: $(INCLUDE_DIR)/board.hpp $(SRC_DIR)/board.cpp
 
 $(BUILD_DIR)/tictactoe.o: $(INCLUDE_DIR)/tictactoe.hpp $(SRC_DIR)/tictactoe.cpp
 	$(CC) $(CFLAGS) -I $(INCLUDE_DIR) -c $(SRC_DIR)/tictactoe.cpp -o $(BUILD_DIR)/tictactoe.o
+
+$(BUILD_DIR)/reversi.o: $(INCLUDE_DIR)/reversi.hpp $(SRC_DIR)/reversi.cpp
+	$(CC) $(CFLAGS) -I $(INCLUDE_DIR) -c $(SRC_DIR)/reversi.cpp -o $(BUILD_DIR)/reversi.o
 
 $(BUILD_DIR)/modulo_cadastro.o: $(INCLUDE_DIR)/modulo_cadastro.hpp $(SRC_DIR)/modulo_cadastro.cpp
 	$(CC) $(CFLAGS) -I $(INCLUDE_DIR) -c $(SRC_DIR)/modulo_cadastro.cpp -o $(BUILD_DIR)/modulo_cadastro.o

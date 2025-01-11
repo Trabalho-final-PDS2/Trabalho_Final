@@ -1,6 +1,7 @@
 #include <iostream>
 #include "cadastro.hpp"
 #include "tictactoe.hpp"
+#include "reversi.hpp"
 #include <string>
 #include <sstream>
 #include <thread>
@@ -93,8 +94,7 @@ int main()
                                 if (games.CheckWin())
                                 {   
                                     std::cout << std::endl;
-                                    games.PrintBoard();
-                                    std::cout << std::endl;
+                                    games.PrintBoard();                                    std::cout << std::endl;
                                     std::cout << "Jogador " << (games.currentPlayer ? jogador1 : jogador2) << " venceu!\n";
                                     break;
                                 }
