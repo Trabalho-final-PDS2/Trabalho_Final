@@ -98,7 +98,7 @@ int main()
                             }
                         }
                         else if (contador2 == 2)
-                        { // Logica Lig4
+                        {     
                         }
                         else if (contador2 == 3)
                         {
@@ -108,7 +108,8 @@ int main()
                             while(true){
                                 if(Reversi.CanIPlay()){
                                     Reversi.PrintBoard();
-                                    std::cout << "Jogador " << (Reversi.currentPlayer ? 1 : 2) << ", esolha entre as casas vermelhas (11-88): ";
+                                    std::cout << "Jogador " << (Reversi.currentPlayer ? 1 : 2) << ", esolha entre as casas vermelhas (11-88): " << std::endl;
+                                    std::cout << "Jogador 1: " << Reversi.Score(1) << " - Jogador 2: " << Reversi.Score(2) << std::endl;
                                     std::cin >> position;
                                     if(Reversi.isValidAll(Reversi.BoardToVector(position))){
                                         Reversi.playerMove(position, Reversi.currentPlayer);
@@ -127,10 +128,14 @@ int main()
                                 }
                             }
                             if(Reversi.CheckWin()){
+                                std::cout << "PARABENS!!! " << meucadastro.Apelido(indice1) << " voce venceu" << std::endl;
+                                std::this_thread::sleep_for(std::chrono::seconds(2));
                                 meucadastro.SetVD(indice1,3);
                                 meucadastro.SetVD(indice2,-3);
                             }
                             else{
+                                std::cout << "PARABENS!!! " << meucadastro.Apelido(indice2) << " voce venceu" << std::endl;
+                                std::this_thread::sleep_for(std::chrono::seconds(2));
                                 meucadastro.SetVD(indice1,-3);
                                 meucadastro.SetVD(indice2,3);
                             }

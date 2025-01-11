@@ -24,6 +24,7 @@ class reversi : public board::Board{
     bool CanIPlay ();
     int VectorToBoard(int position);
     int BoardToVector(int position);
+    int Score (int player);
     void Inicio();
     // Métodos sobrecarregados da classe base
     void PrintBoard() override;

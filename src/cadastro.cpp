@@ -134,10 +134,11 @@ void cadastro::ExibeApelidos(){
     }
 }
 
-int cadastro::SetVD(int indice, int game){
+void cadastro::SetVD(int indice, int game){
     _MeuCadastro[indice].SetEstatistica(game);
 }
 
-
-       
+std::string cadastro::Apelido(int indice) {
+    return _MeuCadastro[indice].GetApelido();
+}    
 

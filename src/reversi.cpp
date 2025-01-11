@@ -257,10 +257,90 @@ void reversi::PrintBoard(){
     }
 }
 
-void reversi::playerMove(int position, bool isPlayer1){
-    position = BoardToVector(position);
-    board[position] = (isPlayer1 ? player1 : player2);  // Atribui 'X' ou 'O' ao espaço
+void reversi::playerMove(int position, bool isPlayer1) {
+    position = BoardToVector(position); // Converte para índice do vetor
+    if (position < 0 || position >= 64) return; // Verifica se está dentro do tabuleiro
+
+    char self = isPlayer1 ? player1 : player2; // Jogador atual
+    char opponent = isPlayer1 ? player2 : player1; // Adversário
+
+    // Captura para a direita
+    if (IsValidDireita(VectorToBoard(position))) {
+        int tempPos = position + 1;
+        while (board[tempPos] == opponent) {
+            board[tempPos] = self;
+            tempPos++;
+        }
+    }
+
+    // Captura para a esquerda
+    if (IsValidEsquerda(VectorToBoard(position))) {
+        int tempPos = position - 1;
+        while (board[tempPos] == opponent) {
+            board[tempPos] = self;
+            tempPos--;
+        }
+    }
+
+    // Captura para cima
+    if (IsValidCima(VectorToBoard(position))) {
+        int tempPos = position - 8;
+        while (board[tempPos] == opponent) {
+            board[tempPos] = self;
+            tempPos -= 8;
+        }
+    }
+
+    // Captura para baixo
+    if (IsValidBaixo(VectorToBoard(position))) {
+        int tempPos = position + 8;
+        while (board[tempPos] == opponent) {
+            board[tempPos] = self;
+            tempPos += 8;
+        }
+    }
+
+    // Captura para nordeste
+    if (IsValidNordeste(VectorToBoard(position))) {
+        int tempPos = position - 7;
+        while (board[tempPos] == opponent) {
+            board[tempPos] = self;
+            tempPos -= 7;
+        }
+    }
+
+    // Captura para sudeste
+    if (IsValidSudeste(VectorToBoard(position))) {
+        int tempPos = position + 9;
+        while (board[tempPos] == opponent) {
+            board[tempPos] = self;
+            tempPos += 9;
+        }
+    }
+
+    // Captura para sudoeste
+    if (IsValidSudoeste(VectorToBoard(position))) {
+        int tempPos = position + 7;
+        while (board[tempPos] == opponent) {
+            board[tempPos] = self;
+            tempPos += 7;
+        }
+    }
+
+    // Captura para noroeste
+    if (IsValidNoroeste(VectorToBoard(position))) {
+        int tempPos = position - 9;
+        while (board[tempPos] == opponent) {
+            board[tempPos] = self;
+            tempPos -= 9;
+        }
+    }
+
+    // Marca a posição atual como do jogador atual
+    board[position] = self;
 }
+
+
 
 void reversi::Inicio(){
     board[BoardToVector(44)] = player1;
@@ -293,6 +373,27 @@ bool reversi::CheckTie(){
     else{
         return true;
     }
+}
+
+int reversi::Score(int player){
+    int score = 0;
+    if(player == 1){
+            for(int i = 0; i < 63; i++){
+            if(board[i] == 'X'){
+                score++;
+            }
+        }
+        return score;
+    }
+    if(player == 2){
+            for(int i = 0; i < 63; i++){
+            if(board[i] == 'O'){
+                score++;
+            }
+        }
+        return score;
+    }
+    return 0;
 }
 
 bool reversi::CheckWin(){

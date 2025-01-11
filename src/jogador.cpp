@@ -1,6 +1,7 @@
 #include "jogador.hpp"
 #include <iostream>
 #include <string>
+#include <cmath>
 
 jogador::jogador(std::string nome, std::string apelido) : _nome(nome), _apelido(apelido){
     for(int i=0; i < 3; i++){
@@ -47,10 +48,12 @@ void jogador::SetApelido(std::string novoapelido){
 
 void jogador::SetEstatistica(int V_D){
     if(V_D > 0){
+        V_D--;
         this->vitorias[V_D]++;
     }
     else{
-        this->derrotas[-V_D]++;
+        V_D++;
+        this->derrotas[abs(V_D)]++;
     }
 }
 
