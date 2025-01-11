@@ -133,5 +133,11 @@ void cadastro::ExibeApelidos(){
         std::cout<< _MeuCadastro[i].GetApelido() << std::endl;
     }
 }
+
+int cadastro::SetVD(int indice, int game){
+    _MeuCadastro[indice].SetEstatistica(game);
+}
+
+
        
 

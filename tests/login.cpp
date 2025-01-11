@@ -1,6 +1,7 @@
 #include <iostream>
 #include "cadastro.hpp"
 #include "tictactoe.hpp"
+#include "reversi.hpp"
 #include <string>
 #include <sstream>
 #include <thread>
@@ -100,7 +101,39 @@ int main()
                         { // Logica Lig4
                         }
                         else if (contador2 == 3)
-                        { // Logica Reversi
+                        {
+                            reversi Reversi;
+                            int position;
+                            Reversi.Inicio();
+                            while(true){
+                                if(Reversi.CanIPlay()){
+                                    Reversi.PrintBoard();
+                                    std::cout << "Jogador " << (Reversi.currentPlayer ? 1 : 2) << ", esolha entre as casas vermelhas (11-88): ";
+                                    std::cin >> position;
+                                    if(Reversi.isValidAll(Reversi.BoardToVector(position))){
+                                        Reversi.playerMove(position, Reversi.currentPlayer);
+                                        Reversi.CheckGameStatus();
+                                    }
+                                    else{
+                                        std::cout << "Jogada invalida, siga os numeros vermelhos" << std::endl;
+                                        std::this_thread::sleep_for(std::chrono::seconds(2));
+                                    }
+                                }
+                                else{
+                                    Reversi.CheckGameStatus();
+                                }
+                                if(Reversi.CheckTie()){
+                                    break;
+                                }
+                            }
+                            if(Reversi.CheckWin()){
+                                meucadastro.SetVD(indice1,3);
+                                meucadastro.SetVD(indice2,-3);
+                            }
+                            else{
+                                meucadastro.SetVD(indice1,-3);
+                                meucadastro.SetVD(indice2,3);
+                            }
                         }
                         else if (contador2 == 4)
                         { 
