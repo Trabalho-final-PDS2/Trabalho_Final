@@ -1,31 +1,23 @@
-#ifndef TICTACTOE_HPP
-#define TICTACTOE_HPP
-
-#include <iostream>
-#include <vector>
-#include <string>
-
 #include "board.hpp"
+#include <iostream>
 
 namespace game {
 
     class TicTacToe : public board::Board {
-    
-        
-
     public:
-        // Construtor
+        bool currentPlayer;  // Representa o jogador atual
         TicTacToe();
-        bool currentPlayer;  // Variável para controlar o jogador atual
-        // Métodos sobrecarregados da classe base
-        void PrintBoard() override;
+        void PrintBoard();
         void playerMove(int position, bool isPlayer1) override;
-        bool CheckWin() override;
-        bool CheckTie() override;
+        bool CheckWin();
+        bool CheckTie();
+        void CheckGameStatus();
 
-        // Método para alternar o jogador
-        void CheckGameStatus() override;
+    private:
+       
+        bool gameOver = false;  // Indica se o jogo terminou
+        char player1 = 'X';
+        char player2 = 'O';
     };
-}
 
-#endif // TICTACTOE_HPP
+}
