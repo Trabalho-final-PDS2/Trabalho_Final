@@ -110,26 +110,24 @@ int main()
                         }
                         else if (contador2 == 2)
                         {
-                            // Lógica para Lig4 (em construção)
-                        {     
+                            // Lógica para Lig4 (em construção)    
                         }
                         else if (contador2 == 3)
                         {
-                            // Lógica para Reversi (em construção)
                             reversi Reversi;
                             int position;
                             Reversi.Inicio();
-                            while(true){
+                            while(position != -1){
                                 if(Reversi.CanIPlay()){
                                     Reversi.PrintBoard();
-                                    std::cout << "Jogador " << (Reversi.currentPlayer ? 1 : 2) << ", esolha entre as casas vermelhas (11-88): " << std::endl;
-                                    std::cout << "Jogador 1: " << Reversi.Score(1) << " - Jogador 2: " << Reversi.Score(2) << std::endl;
+                                    std::cout << (Reversi.currentPlayer ? jogador1 : jogador2) << ", esolha entre as casas vermelhas (-1 finaliza o jogo): " << std::endl;
+                                    std::cout << jogador1 << " " << Reversi.Score(1) << " - " << jogador2 << " " <<Reversi.Score(2) << std::endl;
                                     std::cin >> position;
                                     if(Reversi.isValidAll(Reversi.BoardToVector(position))){
                                         Reversi.playerMove(position, Reversi.currentPlayer);
                                         Reversi.CheckGameStatus();
                                     }
-                                    else{
+                                    else if (position != -1){
                                         std::cout << "Jogada invalida, siga os numeros vermelhos" << std::endl;
                                         std::this_thread::sleep_for(std::chrono::seconds(2));
                                     }
@@ -141,14 +139,16 @@ int main()
                                     break;
                                 }
                             }
-                            if(Reversi.CheckWin()){
-                                std::cout << "PARABENS!!! " << meucadastro.Apelido(indice1) << " voce venceu" << std::endl;
+                            if(Reversi.CheckWin() && position != -1){
+                                Reversi.PrintBoard();
+                                std::cout << "PARABENS!!! " << jogador1 << " voce venceu" << std::endl;
                                 std::this_thread::sleep_for(std::chrono::seconds(2));
                                 meucadastro.SetVD(indice1,3);
                                 meucadastro.SetVD(indice2,-3);
                             }
-                            else{
-                                std::cout << "PARABENS!!! " << meucadastro.Apelido(indice2) << " voce venceu" << std::endl;
+                            else if (position != -1){
+                                Reversi.PrintBoard();
+                                std::cout << "PARABENS!!! " << jogador2 << " voce venceu" << std::endl;
                                 std::this_thread::sleep_for(std::chrono::seconds(2));
                                 meucadastro.SetVD(indice1,-3);
                                 meucadastro.SetVD(indice2,3);

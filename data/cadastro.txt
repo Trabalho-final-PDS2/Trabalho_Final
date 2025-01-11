@@ -1,2 +1,2 @@
-Nome: Thiago Henrique Apelido: Sarzedo 2 2 1 2 2 2 
-Nome: Gustavo Apelido: Vieira 2 0 1 0 0 0 
+Nome: Thiago Henrique Apelido: Sarzedo 0 0 1 0 0 1 
+Nome: Gustavo Apelido: Vieira 0 0 1 0 0 1 

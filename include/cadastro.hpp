@@ -16,7 +16,6 @@ class cadastro{
     void DeletaJogador(std::string apelido);
     void EditaJogador(std::string apelido, std::string novoapelido);
     int VerificaApelido(std::string apelido);
-    std::string Apelido(int indice);
     void SetVD (int indice, int game);
     void Imprime();
     void ExibeApelidos();

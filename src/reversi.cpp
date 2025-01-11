@@ -246,7 +246,7 @@ void reversi::PrintBoard(){
                 std::cout << "\033[31m" << i << "\033[0m" << "\033[31m" << j << "\033[0m";
             }
             else{
-                std::cout << i << j;
+                std::cout <<"  ";
             }
             if(j != 8){
                 std::cout << " | ";
