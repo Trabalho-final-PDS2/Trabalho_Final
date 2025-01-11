@@ -6,7 +6,7 @@
 #include <algorithm>
 
 cadastro::cadastro(){ // o construtor de cadastro tenta pegar os cadastros salvos no arquivo txt e inicaliza-los
-    std::ifstream cadastro("../data/cadastro.txt");
+    std::ifstream cadastro("data/cadastro.txt");
     if (!cadastro.is_open()) {
     std::cerr << "Erro: Não foi possível abrir '../data/cadastro.txt'" << std::endl;
     perror("Detalhes do erro");  // Exibe o erro do sistema
