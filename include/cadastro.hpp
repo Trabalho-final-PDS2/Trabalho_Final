@@ -19,6 +19,7 @@ class cadastro{
     void SetVD (std::string playerV, std::string playerD, int game);
     void Imprime();
     void ExibeApelidos();
+    bool login(std::string &jogador1, std::string &jogador2, cadastro &meucadastro);
 };
     
 

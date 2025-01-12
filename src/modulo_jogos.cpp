@@ -6,6 +6,7 @@
 #include "modulo_cadastro.hpp"
 #include "validacao_entrada.hpp"
 
+
 int modulo_jogos(std::string jogador1, std::string jogador2, cadastro &meucadastro){
     std::cout << "\n====================================\n";
     std::cout << "Jogadores encontrados!!!\n";

@@ -179,3 +179,38 @@ void cadastro::SetVD(std::string playerV, std::string playerD, int game){
     game = game * -1;
     _MeuCadastro[VerificaApelido(playerD)].SetEstatistica(game);
 }
+
+
+//Recebe dois apelidos e verifica se eles estão cadastrados
+bool cadastro::login(std::string &jogador1, std::string &jogador2, cadastro &meucadastro){
+    std::string login1, login2;
+
+    std::cout << "\n====================================\n";
+    std::cout << "Digite o apelido do Jogador 1: ";
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    getline(std::cin, login1);
+
+    int indice1 = meucadastro.VerificaApelido(login1);
+
+    if (indice1 == -1){
+        std::cout << "ERRO: Apelido: '" << login1 << "' não encontrado. Tente Novamente!!\n";
+        return false;
+    }
+
+    else{
+        std::cout << "\nDigite o apelido do Jogador 2: ";
+        getline(std::cin, login2);
+
+        int indice2 = meucadastro.VerificaApelido(login2);
+
+        if (indice2 == -1){
+            std::cout << "ERRO: Apelido: '" << login2 << "' não encontrado. Tente Novamente!!\n";
+            return false;
+        }
+    }
+
+    //Se os dois apelidos existem, atribui aos jogadores e retorna true
+    jogador1 = login1;
+    jogador2 = login2;
+    return true;
+}
