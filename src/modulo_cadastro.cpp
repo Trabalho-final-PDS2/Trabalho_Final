@@ -26,19 +26,21 @@ int modulo_cadastro(cadastro &meucadastro){
         input.get(comando);
         switch (tolower(comando))
         {
+        
+        //Cadastro de jogador
         case 'c':{
             getchar();
             std::cout << "Digite o nome:" << std::endl;
             getline(std::cin, nome);
-            if(nome.find_first_not_of(" ") == std::string::npos){
+            if(nome.find_first_not_of(" ") == std::string::npos){ //Evita nomes vazios
                 std::cout << "Erro: nome nao digitado" << std::endl;
                 break;
             }
             std::cout << "Digite o apelido (apenas uma palavra permitida)" << std::endl;
             getline(std::cin, linha);
-            std::istringstream copia(linha);
+            std::istringstream copia(linha); //Evita apelidos com mais de uma palavra
             copia >> apelido;
-            if(apelido.find_first_not_of(" ") == std::string::npos){
+            if(apelido.find_first_not_of(" ") == std::string::npos){ //Evita apelidos vazios
                 std::cout << "Erro: apelido nao digitado" << std::endl;
                 break;
             }
@@ -46,27 +48,29 @@ int modulo_cadastro(cadastro &meucadastro){
             break;
         }
 
+
+        //Edição de jogador
         case 'e':{
             getchar();
             std::cout << "Apelidos disponiveis para edicao" << std::endl;
             meucadastro.ExibeApelidos();
             std::cout << "Digite o apelido para edicao (apenas uma palavra permitida)" << std::endl;
             getline(std::cin, linha);
-            std::istringstream copia(linha);
+            std::istringstream copia(linha); //Evita apelidos com mais de uma palavra
             copia >> apelido;
-            if(apelido.find_first_not_of(" ") == std::string::npos){
+            if(apelido.find_first_not_of(" ") == std::string::npos){ //Evita apelidos vazios
                 std::cout << "Erro: apelido nao digitado" << std::endl;
                 break;
             }
-            if(meucadastro.VerificaApelido(apelido) == -1){
+            if(meucadastro.VerificaApelido(apelido) == -1){ //Verifica se o apelido está cadastrado
                 std::cout << "Erro apelido inexistente" << std::endl;
                 break;
             }
             std::cout << "Digite o novo apelido (apenas uma palavra permitida)" << std::endl;
             getline(std::cin, linha);
-            std::istringstream copia2(linha);
+            std::istringstream copia2(linha); //Evita apelidos com mais de uma palavra
             copia2 >> novoapelido;
-            if(novoapelido.find_first_not_of(" ") == std::string::npos){
+            if(novoapelido.find_first_not_of(" ") == std::string::npos){ //Evita apeldios vazios
                 std::cout << "Erro: apelido nao digitado" << std::endl;
                 break;
             }
@@ -74,15 +78,17 @@ int modulo_cadastro(cadastro &meucadastro){
             break;
         }
 
+
+        //Deletor de jogadores
         case 'd':{
             getchar();
             std::cout << "Apelidos existentes" << std::endl;
             meucadastro.ExibeApelidos();
             std::cout << "Digite o apelido para deletar (apenas uma palavra permitida)" << std::endl;
             getline(std::cin, linha);
-            std::istringstream copia(linha);
+            std::istringstream copia(linha); //Evita apelidos com mais de uma palavra
             copia >> apelido;
-            if(apelido.find_first_not_of(" ") == std::string::npos){
+            if(apelido.find_first_not_of(" ") == std::string::npos){ //Evita apelidos vazios
                 std::cout << "Erro: apelido nao digitado" << std::endl;
                 break;
             }
@@ -95,10 +101,14 @@ int modulo_cadastro(cadastro &meucadastro){
             break;
         }
 
+
+        //Retorna 1 para o menu anterior, que mantém o programa funcionando
         case 'm':{
             return 1;
         }
 
+
+        //Retorna 3 pra o menu anterior, que finaliza o programa
         case 'f':{
             return 3;
         }
