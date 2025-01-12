@@ -18,8 +18,8 @@ $(BUILD_DIR):
 	mkdir -p $(BUILD_DIR)
 
 # Regra para compilar o executável, a partir dos arquivos objetos
-$(BIN_DIR)/$(TARGET): $(BUILD_DIR)/cadastro.o $(BUILD_DIR)/jogador.o $(BUILD_DIR)/login.o $(BUILD_DIR)/board.o $(BUILD_DIR)/tictactoe.o $(BUILD_DIR)/reversi.o $(BUILD_DIR)/modulo_cadastro.o $(BUILD_DIR)/modulo_jogos.o
-	$(CC) $(CFLAGS) -o $(BIN_DIR)/$(TARGET) $(BUILD_DIR)/cadastro.o $(BUILD_DIR)/jogador.o $(BUILD_DIR)/login.o $(BUILD_DIR)/board.o $(BUILD_DIR)/tictactoe.o $(BUILD_DIR)/reversi.o $(BUILD_DIR)/modulo_cadastro.o $(BUILD_DIR)/modulo_jogos.o
+$(BIN_DIR)/$(TARGET): $(BUILD_DIR)/cadastro.o $(BUILD_DIR)/jogador.o $(BUILD_DIR)/login.o $(BUILD_DIR)/board.o $(BUILD_DIR)/tictactoe.o $(BUILD_DIR)/reversi.o $(BUILD_DIR)/modulo_cadastro.o $(BUILD_DIR)/modulo_jogos.o $(BUILD_DIR)/validacao_entrada.o
+	$(CC) $(CFLAGS) -o $(BIN_DIR)/$(TARGET) $(BUILD_DIR)/cadastro.o $(BUILD_DIR)/jogador.o $(BUILD_DIR)/login.o $(BUILD_DIR)/board.o $(BUILD_DIR)/tictactoe.o $(BUILD_DIR)/reversi.o $(BUILD_DIR)/modulo_cadastro.o $(BUILD_DIR)/modulo_jogos.o $(BUILD_DIR)/validacao_entrada.o
 
 # Regras para compilar cada arquivo objeto individualmente
 $(BUILD_DIR)/cadastro.o: $(INCLUDE_DIR)/cadastro.hpp $(SRC_DIR)/cadastro.cpp
@@ -46,6 +46,8 @@ $(BUILD_DIR)/modulo_cadastro.o: $(INCLUDE_DIR)/modulo_cadastro.hpp $(SRC_DIR)/mo
 $(BUILD_DIR)/modulo_jogos.o: $(INCLUDE_DIR)/modulo_jogos.hpp $(SRC_DIR)/modulo_jogos.cpp
 	$(CC) $(CFLAGS) -I $(INCLUDE_DIR) -c $(SRC_DIR)/modulo_jogos.cpp -o $(BUILD_DIR)/modulo_jogos.o
 
+$(BUILD_DIR)/validacao_entrada.o: $(INCLUDE_DIR)/validacao_entrada.hpp $(SRC_DIR)/validacao_entrada.cpp
+	$(CC) $(CFLAGS) -I $(INCLUDE_DIR) -c $(SRC_DIR)/validacao_entrada.cpp -o $(BUILD_DIR)/validacao_entrada.o
 
 # Regra para limpar arquivos de compilação
 clean:

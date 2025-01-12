@@ -1,30 +1,13 @@
 #include "reversi.hpp"
 #include <thread>
 #include <chrono>
+#include "validacao_entrada.hpp"
 
 reversi::reversi() : board::Board(64, 'X', 'O'), currentPlayer(true){//Constrói um tabuleiro 8x8 e seta X e O para os players
    
 }
-int reversi::BoardToVector(int position){ //Transforma um numero no padrao board (11 a 88) para o padrao vector (0 a 63)
-    int jogadax,jogaday;
-    jogadax = position / 10;
-    jogaday = position % 10;
-    jogadax--;
-    jogaday--;
-    position = 8 * jogadax + jogaday;
-    return position;
-}
-
-int reversi::VectorToBoard(int position){ //Transforma um numero no padrao vector (0 a 63) para o padrao board (11 a 88)
-    int linha = position / 8;
-    int coluna = position % 8;
-    position = (linha + 1) * 10 + (coluna + 1);
-
-    return position;
-}
 
 bool reversi::IsValidDireita(int position) {
-    position = BoardToVector(position); // Transforma a posição para índice do vetor
     if (position < 0 || position >= 64) return false; // Verifica se está no tabuleiro
 
     char opponent = currentPlayer ? player2 : player1; // Jogador oponente
@@ -48,7 +31,6 @@ bool reversi::IsValidDireita(int position) {
 }
 
 bool reversi::IsValidEsquerda(int position){
-    position = BoardToVector(position); // Transforma a posição para índice do vetor
     if (position < 0 || position >= 64) return false; // Verifica se está no tabuleiro
 
     char opponent = currentPlayer ? player2 : player1; // Jogador oponente
@@ -73,7 +55,6 @@ bool reversi::IsValidEsquerda(int position){
 }
 
 bool reversi::IsValidCima(int position) {
-    position = BoardToVector(position); // Transforma a posição para índice do vetor
     if (position < 0 || position >= 64) return false; // Verifica se está no tabuleiro
 
     char opponent = currentPlayer ? player2 : player1; // Jogador oponente
@@ -98,7 +79,6 @@ bool reversi::IsValidCima(int position) {
 }
 
 bool reversi::IsValidBaixo(int position) {
-    position = BoardToVector(position); // Transforma a posição para índice do vetor
     if (position < 0 || position >= 64) return false; // Verifica se está no tabuleiro
 
     char opponent = currentPlayer ? player2 : player1; // Jogador oponente
@@ -123,7 +103,6 @@ bool reversi::IsValidBaixo(int position) {
 }
 
 bool reversi::IsValidNordeste(int position) {
-    position = BoardToVector(position); // Transforma a posição para índice do vetor
     if (position < 0 || position >= 64) return false; // Verifica se está no tabuleiro
 
     char opponent = currentPlayer ? player2 : player1; // Jogador oponente
@@ -148,7 +127,6 @@ bool reversi::IsValidNordeste(int position) {
 }
 
 bool reversi::IsValidSudeste(int position) {
-    position = BoardToVector(position); // Transforma a posição para índice do vetor
     if (position < 0 || position >= 64) return false; // Verifica se está no tabuleiro
 
     char opponent = currentPlayer ? player2 : player1; // Jogador oponente
@@ -173,7 +151,6 @@ bool reversi::IsValidSudeste(int position) {
 }
 
 bool reversi::IsValidSudoeste(int position) {
-    position = BoardToVector(position); // Transforma a posição para índice do vetor
     if (position < 0 || position >= 64) return false; // Verifica se está no tabuleiro
 
     char opponent = currentPlayer ? player2 : player1; // Jogador oponente
@@ -198,7 +175,6 @@ bool reversi::IsValidSudoeste(int position) {
 }
 
 bool reversi::IsValidNoroeste(int position) {
-    position = BoardToVector(position); // Transforma a posição para índice do vetor
     if (position < 0 || position >= 64) return false; // Verifica se está no tabuleiro
 
     char opponent = currentPlayer ? player2 : player1; // Jogador oponente
@@ -224,7 +200,6 @@ bool reversi::IsValidNoroeste(int position) {
 
 bool reversi::isValidAll(int position){
     if (position < 0 || position >= 64) return false; // Verifica se está no tabuleiro
-    position = VectorToBoard(position);
     if(IsValidEsquerda(position) ||  IsValidDireita(position) || //Verifica se a jogada é valida em qualquer direçao
     IsValidCima(position) || IsValidBaixo(position) ||
     IsValidNordeste(position) || IsValidSudeste(position) ||
@@ -238,104 +213,155 @@ bool reversi::isValidAll(int position){
 
 
 void reversi::PrintBoard(std::string jogador1, std::string jogador2){
+    #ifdef _WIN32
+        system("cls");  // Comando para limpar o terminal no Windows
+    #else
+        system("clear");  // Comando para limpar o terminal no Linux/WSL
+    #endif
     int indice = 0;
-    for(int i = 1; i <= 8; i++){ 
-        for(int j = 1; j <= 8; j++){
+    for(int i = 0; i < 8; i++){
+        for(int j = 0; j < 8; j++){
+            std::cout << " | "; //separadores do tabuleiro
             if (board[indice] == player1 || board[indice] == player2){
-                std::cout << (board[indice] == player1 ? "\033[31m" : "\033[34m") << board[indice] << "\033[0m" << " "; //printa o simbolo do player na cor do playr
+                std::cout << (board[indice] == player1 ? "⚪" : "🔵"); //printa o simbolo do player na cor do playr
             }
             else if(isValidAll(indice)){
-                std::cout << i << j; //se não está ocupada mas é uma casa valida, printa o numero da casa em formato board na cor vermelha
+                std::cout << (indice <= 9 ? " " : "") << "\033[31m" << indice << "\033[0m"; //se não está ocupada mas é uma casa valida, printa o numero da casa na cor do player
             }
             else{
                 std::cout <<"  "; //se nao está ocupada e não é valida nao printa nada
             }
-            if(j != 8){
-                std::cout << " | "; //separadores do tabuleiro
-            }
             indice++;
         }
+        std::cout << " | "; //separadores do tabuleiro
         std::cout << std::endl;
     }
     Score(jogador1, jogador2);
 }
 
 void reversi::playerMove(int position, bool isPlayer1) {
-    position = BoardToVector(position); // Converte para índice do vetor
     if (position < 0 || position >= 64) return; // Verifica se está dentro do tabuleiro
 
     char self = isPlayer1 ? player1 : player2; // Jogador atual
     char opponent = isPlayer1 ? player2 : player1; // Adversário
 
     // Captura para a direita
-    if (IsValidDireita(VectorToBoard(position))) {
+    if (IsValidDireita(position)) {
         int tempPos = position + 1;
         while (board[tempPos] == opponent) {
-            board[tempPos] = self; //Vai preenchendo as casas com o simbolo do player
             tempPos++;
         }
-    }
-
-    // Captura para a esquerda
-    if (IsValidEsquerda(VectorToBoard(position))) {
-        int tempPos = position - 1;
-        while (board[tempPos] == opponent) { 
-            board[tempPos] = self; //Vai preenchendo as casas com o simbolo do player
+        while(tempPos != position){
+            if(board[tempPos] != self){
+                board[tempPos] = self; //Vai preenchendo as casas com o simbolo do player
+                AnimacaoCaptura();
+            }
             tempPos--;
         }
     }
 
-    // Captura para cima
-    if (IsValidCima(VectorToBoard(position))) {
-        int tempPos = position - 8;
-        while (board[tempPos] == opponent) {
-            board[tempPos] = self; //Vai preenchendo as casas com o simbolo do player
-            tempPos -= 8;
+    // Captura para a esquerda
+    if (IsValidEsquerda(position)) {
+        int tempPos = position - 1;
+        while (board[tempPos] == opponent) { 
+            tempPos--;
+        }
+        while(tempPos != position){
+            if(board[tempPos] != self){
+                board[tempPos] = self; //Vai preenchendo as casas com o simbolo do player
+                AnimacaoCaptura();
+            }
+            tempPos++;
         }
     }
 
-    // Captura para baixo
-    if (IsValidBaixo(VectorToBoard(position))) {
-        int tempPos = position + 8;
+    // Captura para cima
+    if (IsValidCima(position)) {
+        int tempPos = position - 8;
         while (board[tempPos] == opponent) {
-            board[tempPos] = self; //Vai preenchendo as casas com o simbolo do player
+            tempPos -= 8;
+        }
+        while(tempPos != position){
+            if(board[tempPos] != self){
+                board[tempPos] = self; //Vai preenchendo as casas com o simbolo do player
+                AnimacaoCaptura();
+            }
             tempPos += 8;
         }
     }
 
+    // Captura para baixo
+    if (IsValidBaixo(position)) {
+        int tempPos = position + 8;
+        while (board[tempPos] == opponent) {
+            tempPos += 8;
+        }
+        while(tempPos != position){
+           if(board[tempPos] != self){
+                board[tempPos] = self; //Vai preenchendo as casas com o simbolo do player
+                AnimacaoCaptura();
+            }
+            tempPos -= 8;
+        }
+    }
+
     // Captura para nordeste
-    if (IsValidNordeste(VectorToBoard(position))) {
+    if (IsValidNordeste(position)) {
         int tempPos = position - 7;
         while (board[tempPos] == opponent) {
-            board[tempPos] = self; //Vai preenchendo as casas com o simbolo do player
             tempPos -= 7;
         }
-    }
-
-    // Captura para sudeste
-    if (IsValidSudeste(VectorToBoard(position))) {
-        int tempPos = position + 9;
-        while (board[tempPos] == opponent) {
-            board[tempPos] = self; //Vai preenchendo as casas com o simbolo do player
-            tempPos += 9;
-        }
-    }
-
-    // Captura para sudoeste
-    if (IsValidSudoeste(VectorToBoard(position))) {
-        int tempPos = position + 7;
-        while (board[tempPos] == opponent) {
-            board[tempPos] = self; //Vai preenchendo as casas com o simbolo do player
+         while(tempPos != position){
+            if(board[tempPos] != self){
+                board[tempPos] = self; //Vai preenchendo as casas com o simbolo do player
+                AnimacaoCaptura();
+            }
             tempPos += 7;
         }
     }
 
+    // Captura para sudeste
+    if (IsValidSudeste(position)) {
+        int tempPos = position + 9;
+        while (board[tempPos] == opponent) {
+            tempPos += 9;
+        }
+         while(tempPos != position){
+            if(board[tempPos] != self){
+                board[tempPos] = self; //Vai preenchendo as casas com o simbolo do player
+                AnimacaoCaptura();
+            }
+            tempPos -= 9;
+        }
+    }
+
+    // Captura para sudoeste
+    if (IsValidSudoeste(position)) {
+        int tempPos = position + 7;
+        while (board[tempPos] == opponent) {
+            tempPos += 7;
+        }
+         while(tempPos != position){
+            if(board[tempPos] != self){
+                board[tempPos] = self; //Vai preenchendo as casas com o simbolo do player
+                AnimacaoCaptura();
+            }
+            tempPos -= 7;
+        }
+    }
+
     // Captura para noroeste
-    if (IsValidNoroeste(VectorToBoard(position))) {
+    if (IsValidNoroeste(position)) {
         int tempPos = position - 9;
         while (board[tempPos] == opponent) {
-            board[tempPos] = self; //Vai preenchendo as casas com o simbolo do player
             tempPos -= 9;
+        }
+         while(tempPos != position){
+            if(board[tempPos] != self){
+                board[tempPos] = self; //Vai preenchendo as casas com o simbolo do player
+                AnimacaoCaptura();
+            }
+            tempPos += 9;
         }
     }
 
@@ -346,15 +372,15 @@ void reversi::playerMove(int position, bool isPlayer1) {
 
 
 void reversi::Inicio(){
-    board[BoardToVector(44)] = player1; //Preenche as casas iniciais no padrão do Reversi
-    board[BoardToVector(55)] = player1;
-    board[BoardToVector(45)] = player2;
-    board[BoardToVector(54)] = player2;
+    board[27] = player1; //Preenche as casas iniciais no padrão do Reversi
+    board[36] = player1;
+    board[28] = player2;
+    board[35] = player2;
 }
 
 bool reversi::CanIPlay(){ //Verifica se existe alguma jogada válida para o player
     bool ans = false;
-    for(int i = 0; i < 63; i++){
+    for(int i = 0; i < 64; i++){
         if(isValidAll(i) && board[i] == ' '){
             ans = true;
             break;
@@ -381,23 +407,23 @@ bool reversi::CheckTie(){ //Verifica se o jogo terminou (nenhum dos jogadores te
 
 void reversi::Score(std::string jogador1, std::string jogador2){ //Conta o score e exibe na tela
     int score1 = 0, score2 = 0;;
-    for(int i = 0; i < 63; i++){
+    for(int i = 0; i < 64; i++){
         if(board[i] == 'X'){
             score1++;
         }
     }
 
-    for(int i = 0; i < 63; i++){
+    for(int i = 0; i < 64; i++){
         if(board[i] == 'O'){
             score2++;
         }
     }
-    std::cout << jogador1 << " " << score1 << " - " << jogador2 << " " << score2 << std::endl;
+    std::cout << "Score: " << jogador1 << " (" <<score1 << ") / " << jogador2 << " (" << score2 << ")" << std::endl;
 }
 
 int reversi::CheckWin(std::string jogador1, std::string jogador2){ //Conta quem tem mais símbolos no tabuleiro para a vitória
     int X = 0, O = 0;
-    for(int i = 0; i < 63; i++){
+    for(int i = 0; i < 64; i++){
         if(board[i] == 'X'){
             X++;
         }
@@ -423,47 +449,69 @@ void reversi::CheckGameStatus(){ //Troca o player, passa a vez
     currentPlayer = !currentPlayer;
 }
 
+void reversi::AnimacaoCaptura(){
+     #ifdef _WIN32
+        system("cls");  // Comando para limpar o terminal no Windows
+    #else
+        system("clear");  // Comando para limpar o terminal no Linux/WSL
+    #endif
+    int indice = 0;
+    for(int i = 0; i < 8; i++){
+        for(int j = 0; j < 8; j++){
+            std::cout << " | "; //separadores do tabuleiro
+            if (board[indice] == player1 || board[indice] == player2){
+                std::cout << (board[indice] == player1 ? "⚪" : "🔵"); //printa o simbolo do player na cor do playr
+            }
+            else{
+                std::cout <<"  "; //se nao está ocupada e não é valida nao printa nada
+            }
+            indice++;
+        }
+        std::cout << " | "; //separadores do tabuleiro
+        std::cout << std::endl;
+    }
+    std::this_thread::sleep_for(std::chrono::milliseconds(500));
+}
+
 //Implementação de um jogo de Reversi
 void reversi::JogarReversi(std::string jogador1, std::string jogador2, cadastro &meucadastro, reversi &Reversi){
     int position;
-    Reversi.Inicio();
+    Inicio();
     while(position != -1){
 
         //Se o jogador tem jogadas válidas ele vai jogar
-        if(Reversi.CanIPlay()){
-            Reversi.PrintBoard(jogador1, jogador2);
-            std::cout << (Reversi.currentPlayer ? jogador1 : jogador2) << ", escolha entre as casas válidas (-1 finaliza o jogo): " << std::endl;
+        if(CanIPlay()){
+            PrintBoard(jogador1, jogador2);
+            std::cout << (currentPlayer ? jogador1 : jogador2) << ", escolha entre as casas válidas (-1 finaliza o jogo): " << std::endl;
 
             std::cin >> position;
 
-            //validação da entrada (evita que position receba char por exemplo)
-            if (std::cin.fail()) {
-                std::cin.clear(); // Limpa o estado de erro do cin
-                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Descarta entrada inválida
-                std::cout << "Entrada invalida, por favor insira apenas numeros!" << std::endl;
-                std::this_thread::sleep_for(std::chrono::seconds(2));
-                continue; // Volta para o início do loop
-            }
+            
+        //evita que position receba char por exemplo
+        if (validacao_entrada()) {
+            continue; // Volta para o início do loop
+        }
 
             //Se a jogada é válida, faz a jogada e passa a vez
-            if(Reversi.isValidAll(Reversi.BoardToVector(position))){
-                Reversi.playerMove(position, Reversi.currentPlayer);
-                Reversi.CheckGameStatus();
+            if(isValidAll(position)){
+                playerMove(position, currentPlayer);
+                AnimacaoCaptura();
+                CheckGameStatus();
             }
             //Se a jogada não é valida exibe mensagem de erro e o mesmo jogador tenta jogar novamente
             else if (position != -1){
-                std::cout << "Jogada invalida, siga os numeros vermelhos" << std::endl;
+                std::cout << "Jogada invalida, siga os numeros no tabuleiro" << std::endl;
                 std::this_thread::sleep_for(std::chrono::seconds(2));
             }
         }
 
         //Se o jogador nao tem jogadas válidas, passa a vez
         else{
-            Reversi.CheckGameStatus();
+            CheckGameStatus();
         }
 
         //Checa se o jogo acabou após cada rodada
-        if(Reversi.CheckTie()){
+        if(CheckTie()){
             break;
         }
     }
@@ -471,7 +519,7 @@ void reversi::JogarReversi(std::string jogador1, std::string jogador2, cadastro 
 
     //Confere quem venceu e exibe na tela, além de atualizar as estatísticas
     if(position != -1){
-        int resultado = Reversi.CheckWin(jogador1, jogador2);
+        int resultado = CheckWin(jogador1, jogador2);
         if(resultado == 1){ 
             meucadastro.SetVD(jogador1,jogador2,3);
         }
@@ -479,7 +527,7 @@ void reversi::JogarReversi(std::string jogador1, std::string jogador2, cadastro 
             meucadastro.SetVD(jogador2,jogador1,3);
         }
         else if (resultado == -1){
-            std::cout << "nenhuma, vitoria registrada" << std::endl;
+            std::cout << "nenhuma vitoria registrada" << std::endl;
         }
     }
 }

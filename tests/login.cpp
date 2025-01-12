@@ -6,6 +6,7 @@
 #include "cadastro.hpp"
 #include "modulo_cadastro.hpp"
 #include "modulo_jogos.hpp"
+#include "validacao_entrada.hpp"
 
 
 //Recebe dois apelidos e verifica se eles estão cadastrados
@@ -43,9 +44,6 @@ bool login(std::string &jogador1, std::string &jogador2, cadastro &meucadastro){
 }
 
 
-
-
-
 int main()
 {   
     cadastro meucadastro;
@@ -64,13 +62,9 @@ int main()
         std::cout << "Digite a opção desejada: ";
         std::cin >> comando;
 
-        //validação da entrada (evita que comando receba char por exemplo)
-        if (std::cin.fail()) {
-                std::cin.clear(); // Limpa o estado de erro do cin
-                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Descarta entrada inválida
-                std::cout << "Entrada invalida, por favor insira apenas numeros!" << std::endl;
-                std::this_thread::sleep_for(std::chrono::seconds(2));
-                continue; // Volta para o início do loop
+        //evita que comando receba char por exemplo
+        if (validacao_entrada()) {
+            continue; // Volta para o início do loop
         }
 
 

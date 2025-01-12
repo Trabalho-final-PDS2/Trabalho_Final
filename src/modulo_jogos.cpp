@@ -3,6 +3,8 @@
 #include <chrono>
 #include "tictactoe.hpp"
 #include "reversi.hpp"
+#include "modulo_cadastro.hpp"
+#include "validacao_entrada.hpp"
 
 int modulo_jogos(std::string jogador1, std::string jogador2, cadastro &meucadastro){
     std::cout << "\n====================================\n";
@@ -23,15 +25,10 @@ int modulo_jogos(std::string jogador1, std::string jogador2, cadastro &meucadast
         std::cout << "Digite a opção desejada: ";
         std::cin >> comando;
         
-        //validação da entrada (evita que comando receba char por exemplo)
-        if (std::cin.fail()) {
-            std::cin.clear(); // Limpa o estado de erro do cin
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Descarta entrada inválida
-            std::cout << "Entrada invalida, por favor insira apenas numeros!" << std::endl;
-            std::this_thread::sleep_for(std::chrono::seconds(2));
+        //evita que comando receba char por exemplo
+        if (validacao_entrada()) {
             continue; // Volta para o início do loop
         }
-
 
         //Jogar jogo da velha
         if (comando == 1)
@@ -46,15 +43,10 @@ int modulo_jogos(std::string jogador1, std::string jogador2, cadastro &meucadast
                 std::cout << "Jogador " << (games.currentPlayer ? jogador1 : jogador2) << ", entre com a posição (0-8): ";
                 std::cin >> position;
 
-                //validação da entrada (evita que position receba char por exemplo)
-                if (std::cin.fail()) {
-                    std::cin.clear(); // Limpa o estado de erro do cin
-                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Descarta entrada inválida
-                    std::cout << "Entrada invalida, por favor insira apenas numeros!" << std::endl;
-                    std::this_thread::sleep_for(std::chrono::seconds(2));
+                //evita que position receba char por exemplo
+                if (validacao_entrada()) {
                     continue; // Volta para o início do loop
                 }
-
 
                 // Verifica se a posição é válida
                 if (position < 0 || position >= 9)

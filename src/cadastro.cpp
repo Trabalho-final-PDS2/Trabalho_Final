@@ -4,6 +4,9 @@
 #include <string>
 #include <sstream>
 #include <algorithm>
+#include <thread>
+#include <chrono>
+
 
 cadastro::cadastro(){ // o construtor de cadastro tenta pegar os cadastros salvos no arquivo txt e inicaliza-los
     std::ifstream cadastro("../data/cadastro.txt");
@@ -176,5 +179,3 @@ void cadastro::SetVD(std::string playerV, std::string playerD, int game){
     game = game * -1;
     _MeuCadastro[VerificaApelido(playerD)].SetEstatistica(game);
 }
-  
-

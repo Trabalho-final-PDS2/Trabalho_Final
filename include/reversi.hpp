@@ -25,13 +25,12 @@ class reversi : public board::Board{
 
 
     bool CanIPlay ();
-    int VectorToBoard(int position);
-    int BoardToVector(int position);
     void Score (std::string jogador1, std::string jogador2);
     void Inicio();
     void JogarReversi(std::string jogador1, std::string jogador2, cadastro &meucadastro, reversi &Reversi);
     void PrintBoard(std::string jogador1, std::string jogador2);
     int CheckWin(std::string jogador1, std::string jogador2);
+    void AnimacaoCaptura();
 
     // Métodos sobrecarregados da classe base
     void playerMove(int position, bool isPlayer1) override;

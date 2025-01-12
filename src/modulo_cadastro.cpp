@@ -5,6 +5,7 @@
 #include <thread>
 #include <chrono>
 
+
 void menu(){
     std::this_thread::sleep_for(std::chrono::seconds(2));
     std::cout<<std::endl;
@@ -16,6 +17,7 @@ void menu(){
     std::cout<< "m -> Voltar para o menu inicial" <<std::endl;
     std::cout<< "f -> Finalizar" <<std::endl;
 }
+
 
 int modulo_cadastro(cadastro &meucadastro){
     std::string nome, apelido, novoapelido, linha;
