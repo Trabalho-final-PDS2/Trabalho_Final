@@ -4,16 +4,17 @@
 #include <string>
 #include <sstream>
 #include <algorithm>
-#include <thread>
-#include <chrono>
+#include "utilidades.hpp"
 
 
 cadastro::cadastro(){ // o construtor de cadastro tenta pegar os cadastros salvos no arquivo txt e inicaliza-los
     std::ifstream cadastro("../data/cadastro.txt");
+    std::ofstream erros("../data/backup_erros.txt", std::ios::app);
+    bool ErroDetectado = false;;
     if (!cadastro.is_open()) {
     std::cerr << "Erro: Não foi possível abrir '../data/cadastro.txt'" << std::endl;
     perror("Detalhes do erro");  // Exibe o erro do sistema
-}
+    }
     /*Todos os cadastros estarão salvos no padrão 
     Nome: nome Apelido: apelido 0 0 0 0 0 0 
     sendo os ultimos 6 digitos os vetores vitórias e derrotas
@@ -48,14 +49,20 @@ cadastro::cadastro(){ // o construtor de cadastro tenta pegar os cadastros salvo
                 fluxo >> derrotas[i];
             }
 
-            //adiciona o jogador no cadastro
+            if (!validacao_fluxo_linha(fluxo, erros, linha)) {
+            ErroDetectado = true;
+            std::cerr << "Linha inválida -> " << linha << " / deletada de cadastro e salva em backup" << std::endl;
+            continue; // Pula para a próxima linha
+            }
+
+            //adiciona o jogador no cadastro se for lido corretamente do arquivo
             jogador adiciona(nome,apelido,vitorias,derrotas);
             _MeuCadastro.push_back(adiciona);
         }
+        if(ErroDetectado){
+            sleep(10);
+        }
         cadastro.close();
-    }
-    else{
-        std::cerr << "Arquivo de cadastro nao encontrado" << std::endl;
     }
 }
 
@@ -110,11 +117,13 @@ int cadastro::VerificaApelido(std::string apelido){
 void cadastro::CadastraJogador(std::string nome, std::string apelido){
     if(VerificaApelido(apelido) != -1){
         std::cout << "Erro: Apelido nao disponivel" << std::endl;
+        sleep(2);
     }
     else{
         jogador adiciona(nome,apelido);
         _MeuCadastro.push_back(adiciona);
         std::cout << "Jogador " << apelido << " cadastrado com sucesso" << std::endl;
+        sleep(2);
     }
 }
 
@@ -125,9 +134,11 @@ void cadastro::DeletaJogador(std::string apelido){
     if(indice != -1){
         _MeuCadastro.erase(_MeuCadastro.begin() + indice);
         std::cout << "Jogador " << apelido << " deletado com sucesso" << std::endl;
+        sleep(2);
     }
     else{
         std::cout << "Erro: jogador " << apelido << " nao cadastrado" << std::endl;
+        sleep(2);
     }
 }
 
@@ -139,10 +150,12 @@ void cadastro::EditaJogador(std::string apelido, std::string novoapelido){
         indice = VerificaApelido(apelido);
         _MeuCadastro[indice].SetApelido(novoapelido);
         std::cout << "Jogador " << apelido << " editado com sucesso para " << novoapelido << std::endl;
+        sleep(2);
     }
 
     else{
         std::cout << "Erro: apelido " << novoapelido << " nao disponivel" << std::endl;
+        sleep(2);
     }
 }
 
@@ -183,6 +196,8 @@ void cadastro::SetVD(std::string playerV, std::string playerD, int game){
 
 //Recebe dois apelidos e verifica se eles estão cadastrados
 bool cadastro::login(std::string &jogador1, std::string &jogador2, cadastro &meucadastro){
+    limpa_tela();
+
     std::string login1, login2;
 
     std::cout << "\n====================================\n";
@@ -194,6 +209,7 @@ bool cadastro::login(std::string &jogador1, std::string &jogador2, cadastro &meu
 
     if (indice1 == -1){
         std::cout << "ERRO: Apelido: '" << login1 << "' não encontrado. Tente Novamente!!\n";
+        sleep(3);
         return false;
     }
 
@@ -205,6 +221,7 @@ bool cadastro::login(std::string &jogador1, std::string &jogador2, cadastro &meu
 
         if (indice2 == -1){
             std::cout << "ERRO: Apelido: '" << login2 << "' não encontrado. Tente Novamente!!\n";
+            sleep(3);
             return false;
         }
     }

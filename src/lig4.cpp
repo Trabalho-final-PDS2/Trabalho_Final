@@ -1,6 +1,7 @@
 // lig4.cpp
 #include "lig4.hpp"
 #include <iostream>
+#include "utilidades.hpp"
 
 
     Lig4::Lig4() : Board(ROWS * COLS, 'X', 'O'), currentPlayer(true), gameOver(false) {
@@ -10,6 +11,8 @@
     }
 
     void Lig4::PrintBoard() {
+        limpa_tela();
+
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < COLS; j++) {
                 std::cout << "|" << board[i * COLS + j] << "|";
@@ -30,6 +33,7 @@
     void Lig4::playerMove(int position, bool isPlayer1) {
         if (position < 1 || position > COLS) {
             std::cout << "Erro: coluna inválida\n";
+            sleep(2);
             return;
         }
 
@@ -38,6 +42,7 @@
 
         if (row == -1) {
             std::cout << "Erro: coluna cheia\n";
+            sleep(2);
             return;
         }
 
@@ -105,16 +110,18 @@
                 return false;
             }
         }
-        return !CheckWin();
+        return CheckWin();
     }
 
     void Lig4::CheckGameStatus() {
         if (CheckWin()) {
             std::cout << "Jogador " << (currentPlayer ? 1 : 2) << " venceu!\n";
+            sleep(2);
             gameOver = true;
         }
         else if (CheckTie()) {
             std::cout << "Empate!\n";
+            sleep(2);
             gameOver = true;
         }
         else {

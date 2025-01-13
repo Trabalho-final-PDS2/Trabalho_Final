@@ -1,2 +1,4 @@
-Nome: Thiago Henrique Apelido: Sarzedo 0 0 5 0 0 4 
+Nome: Hector Apelido: Azpúrua 0 0 0 0 0 0 
+Nome: Daniel Apelido: Canton 0 0 0 0 0 1 
+Nome: Thiago Henrique Apelido: Sarzedo 0 0 6 0 0 4 
 Nome: Gustavo Apelido: Vieira 0 0 3 0 0 5 

@@ -1,14 +1,12 @@
 #include <iostream>
 #include "cadastro.hpp"
+#include "utilidades.hpp"
 #include <string>
 #include <sstream>
-#include <thread>
-#include <chrono>
 
 
 void menu(){
-    std::this_thread::sleep_for(std::chrono::seconds(2));
-    std::cout<<std::endl;
+    limpa_tela();
     std::cout<< "Digite:" <<std::endl;
     std::cout<< "c -> Cadastrar usuário" <<std::endl;
     std::cout<< "e -> Editar usuário" <<std::endl;
@@ -26,6 +24,7 @@ int modulo_cadastro(cadastro &meucadastro){
     while(std::cin >> linha){
         std::istringstream input(linha);
         input.get(comando);
+        limpa_tela();
         switch (tolower(comando))
         {
         
@@ -34,16 +33,14 @@ int modulo_cadastro(cadastro &meucadastro){
             getchar();
             std::cout << "Digite o nome:" << std::endl;
             getline(std::cin, nome);
-            if(nome.find_first_not_of(" ") == std::string::npos){ //Evita nomes vazios
-                std::cout << "Erro: nome nao digitado" << std::endl;
+            nome = vazio(nome); //Evita nomes vazios
+            if(nome == "ERROR"){
                 break;
             }
             std::cout << "Digite o apelido (apenas uma palavra permitida)" << std::endl;
             getline(std::cin, linha);
-            std::istringstream copia(linha); //Evita apelidos com mais de uma palavra
-            copia >> apelido;
-            if(apelido.find_first_not_of(" ") == std::string::npos){ //Evita apelidos vazios
-                std::cout << "Erro: apelido nao digitado" << std::endl;
+            apelido = valida_apelido(linha);//Evita apelidos com mais de uma palavra e apelidos vazios
+            if(apelido == "ERROR"){
                 break;
             }
             meucadastro.CadastraJogador(nome,apelido);
@@ -58,10 +55,8 @@ int modulo_cadastro(cadastro &meucadastro){
             meucadastro.ExibeApelidos();
             std::cout << "Digite o apelido para edicao (apenas uma palavra permitida)" << std::endl;
             getline(std::cin, linha);
-            std::istringstream copia(linha); //Evita apelidos com mais de uma palavra
-            copia >> apelido;
-            if(apelido.find_first_not_of(" ") == std::string::npos){ //Evita apelidos vazios
-                std::cout << "Erro: apelido nao digitado" << std::endl;
+            apelido = valida_apelido(linha);//Evita apelidos com mais de uma palavra e apelidos vazio
+            if(apelido == "ERROR"){
                 break;
             }
             if(meucadastro.VerificaApelido(apelido) == -1){ //Verifica se o apelido está cadastrado
@@ -70,10 +65,8 @@ int modulo_cadastro(cadastro &meucadastro){
             }
             std::cout << "Digite o novo apelido (apenas uma palavra permitida)" << std::endl;
             getline(std::cin, linha);
-            std::istringstream copia2(linha); //Evita apelidos com mais de uma palavra
-            copia2 >> novoapelido;
-            if(novoapelido.find_first_not_of(" ") == std::string::npos){ //Evita apeldios vazios
-                std::cout << "Erro: apelido nao digitado" << std::endl;
+            novoapelido = valida_apelido(linha);
+            if(apelido == "ERROR"){
                 break;
             }
             meucadastro.EditaJogador(apelido,novoapelido);
@@ -88,10 +81,8 @@ int modulo_cadastro(cadastro &meucadastro){
             meucadastro.ExibeApelidos();
             std::cout << "Digite o apelido para deletar (apenas uma palavra permitida)" << std::endl;
             getline(std::cin, linha);
-            std::istringstream copia(linha); //Evita apelidos com mais de uma palavra
-            copia >> apelido;
-            if(apelido.find_first_not_of(" ") == std::string::npos){ //Evita apelidos vazios
-                std::cout << "Erro: apelido nao digitado" << std::endl;
+            apelido = valida_apelido(linha);//Evita apelidos com mais de uma palavra e apelidos vazio
+            if(apelido == "ERROR"){
                 break;
             }
             meucadastro.DeletaJogador(apelido);
@@ -99,7 +90,9 @@ int modulo_cadastro(cadastro &meucadastro){
         }
 
         case 'i':{
+            limpa_tela();
             meucadastro.Imprime();
+            sleep(5);
             break;
         }
 
@@ -117,6 +110,7 @@ int modulo_cadastro(cadastro &meucadastro){
 
         default:{
             std::cout<< "Erro: comando não existente" <<std::endl;
+            sleep(2);
             break;
         }
         }

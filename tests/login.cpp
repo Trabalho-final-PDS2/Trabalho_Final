@@ -1,12 +1,10 @@
 #include <iostream>
 #include <string>
 #include <sstream>
-#include <thread>
-#include <chrono>
 #include "cadastro.hpp"
 #include "modulo_cadastro.hpp"
 #include "modulo_jogos.hpp"
-#include "validacao_entrada.hpp"
+#include "utilidades.hpp"
 
 
 int main()
@@ -17,7 +15,8 @@ int main()
 
     while (comando != 3)
     {
-        std::cout << "\n====================================\n";
+        limpa_tela();
+        std::cout << "====================================\n";
         std::cout << "Bem vindo ao Tabuleiro de Jogos\n";
         std::cout << "====================================\n";
         std::cout << "1 - Jogar\n";
@@ -43,21 +42,21 @@ int main()
 
 
         //Opção cadastro
-        else if (comando == 2)
+        if (comando == 2)
         {
             comando = modulo_cadastro(meucadastro); 
         }
 
 
         //Opção sair
-        else if (comando == 3)
+        if (comando == 3)
         {
             std::cout << "Obrigado por Jogar, até mais!!!\n";
             return 0;
         }
 
 
-        else if (comando != 1)
+        if(comando != 1)
         {
             std::cout << "ERRO: Opção Inválida!!\n";
         }

@@ -1,10 +1,12 @@
 #include "tictactoe.hpp"
+#include "utilidades.hpp"
 
 namespace game {
 
     TicTacToe::TicTacToe() : board::Board(9, 'X', 'O'), currentPlayer(true) {}
 
     void TicTacToe::PrintBoard() {
+        limpa_tela();
         int position = 0; 
         for (int i = 0; i < spaces; ++i) {
             if (i % 3 == 0 && i != 0) std::cout << "\n---+---+---\n";
@@ -24,10 +26,12 @@ namespace game {
     void TicTacToe::playerMove(int position, bool isPlayer1) {
         if (position < 0 || position >= spaces) {
             std::cout << "Posição inválida!\n";
+            sleep(2);
             return;
         }
         if (board[position] != ' ') {
             std::cout << "Essa posição já está ocupada!\n";
+            sleep(2);
             return;
         }
         board[position] = (isPlayer1 ? player1 : player2);

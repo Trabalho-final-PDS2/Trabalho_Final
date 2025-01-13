@@ -1,7 +1,6 @@
 #include "reversi.hpp"
-#include <thread>
-#include <chrono>
-#include "validacao_entrada.hpp"
+#include "utilidades.hpp"
+
 
 reversi::reversi() : board::Board(64, 'X', 'O'), currentPlayer(true){//Constrói um tabuleiro 8x8 e seta X e O para os players
    
@@ -213,11 +212,7 @@ bool reversi::isValidAll(int position){
 
 
 void reversi::PrintBoard(std::string jogador1, std::string jogador2){
-    #ifdef _WIN32
-        system("cls");  // Comando para limpar o terminal no Windows
-    #else
-        system("clear");  // Comando para limpar o terminal no Linux/WSL
-    #endif
+    limpa_tela();
     int indice = 0;
     for(int i = 0; i < 8; i++){
         for(int j = 0; j < 8; j++){
@@ -436,7 +431,7 @@ int reversi::CheckWin(std::string jogador1, std::string jogador2){ //Conta quem 
 
     if(X != O){
         std::cout << "PARABENS!!! " << (X > O ? jogador1 : jogador2) << " voce venceu" << std::endl;
-        std::this_thread::sleep_for(std::chrono::seconds(2));
+        sleep(2);
         return X > O;
     }
     else{
@@ -450,11 +445,7 @@ void reversi::CheckGameStatus(){ //Troca o player, passa a vez
 }
 
 void reversi::AnimacaoCaptura(){
-     #ifdef _WIN32
-        system("cls");  // Comando para limpar o terminal no Windows
-    #else
-        system("clear");  // Comando para limpar o terminal no Linux/WSL
-    #endif
+    limpa_tela();
     int indice = 0;
     for(int i = 0; i < 8; i++){
         for(int j = 0; j < 8; j++){
@@ -470,7 +461,7 @@ void reversi::AnimacaoCaptura(){
         std::cout << " | "; //separadores do tabuleiro
         std::cout << std::endl;
     }
-    std::this_thread::sleep_for(std::chrono::milliseconds(500));
+    sleep(0.5);
 }
 
 //Implementação de um jogo de Reversi
@@ -501,7 +492,7 @@ void reversi::JogarReversi(std::string jogador1, std::string jogador2, cadastro 
             //Se a jogada não é valida exibe mensagem de erro e o mesmo jogador tenta jogar novamente
             else if (position != -1){
                 std::cout << "Jogada invalida, siga os numeros no tabuleiro" << std::endl;
-                std::this_thread::sleep_for(std::chrono::seconds(2));
+                sleep(2);
             }
         }
 
