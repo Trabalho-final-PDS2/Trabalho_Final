@@ -24,11 +24,11 @@ namespace board {
         char GetPlayer1();
         void SetPlayer2(char player2);
         char GetPlayer2();
+        void PrintBoard();  // Método para imprimir o tabuleiro
+        bool CheckWin();
 
         // Métodos virtuais puros (para serem implementados nas subclasses)
-        virtual void PrintBoard() = 0;  // Método para imprimir o tabuleiro
         virtual void playerMove(int position, bool isPlayer1) = 0;  // Movimento do jogador
-        virtual bool CheckWin() = 0;  // Verificação de vitória
         virtual bool CheckTie() = 0;  // Verificação de empate
         virtual void CheckGameStatus() = 0;
     };

@@ -4,6 +4,9 @@
 #include <string>
 #include <sstream>
 #include <algorithm>
+#include <thread>
+#include <chrono>
+
 
 cadastro::cadastro(){ // o construtor de cadastro tenta pegar os cadastros salvos no arquivo txt e inicaliza-los
     std::ifstream cadastro("../data/cadastro.txt");
@@ -11,27 +14,41 @@ cadastro::cadastro(){ // o construtor de cadastro tenta pegar os cadastros salvo
     std::cerr << "Erro: Não foi possível abrir '../data/cadastro.txt'" << std::endl;
     perror("Detalhes do erro");  // Exibe o erro do sistema
 }
+    /*Todos os cadastros estarão salvos no padrão 
+    Nome: nome Apelido: apelido 0 0 0 0 0 0 
+    sendo os ultimos 6 digitos os vetores vitórias e derrotas
+    exemplo Nome: Thiago Henrique Apelido: Sarzedo 0 0 3 0 0 3*/
+
     if(cadastro.is_open()){
         std::string linha, lixo, nome, apelido, palavra;
         int vitorias[3], derrotas [3];
-        while(std::getline(cadastro,linha)){
-            std::istringstream fluxo(linha);
-            fluxo >> lixo;
+        while(std::getline(cadastro,linha)){ 
+            std::istringstream fluxo(linha); //Lê uma linha inteira de cadastro e a transforma em um fluxo
+            fluxo >> lixo; //joga a primeira palavra (Nome:) no lixo
             nome = "";
+
+            //Recebe todas as palavras e vai salvando em nome, separadas por um espaço. Quando encontra a palavra "Apelido:", deleta o ultimo caractere de espaço sobrando em nome e da break
             while(fluxo >> palavra){
-                if(palavra == "Apelido:"){
-                    nome.pop_back();
+                if(palavra == "Apelido:"){ 
+                    nome.pop_back(); 
                     break;
                 }
-                nome += palavra + " ";
+                nome += palavra + " "; 
             }
+
+            //Joga a ultima palavra em apelido, que tem apenas uma palavra
             fluxo >> apelido;
+
+
+            //recebe os vetores de vitorias e derrotas
             for(int i = 0; i < 3; i++){
                 fluxo >> vitorias[i];
             }
             for(int i = 0; i < 3; i++){
                 fluxo >> derrotas[i];
             }
+
+            //adiciona o jogador no cadastro
             jogador adiciona(nome,apelido,vitorias,derrotas);
             _MeuCadastro.push_back(adiciona);
         }
@@ -42,9 +59,12 @@ cadastro::cadastro(){ // o construtor de cadastro tenta pegar os cadastros salvo
     }
 }
 
-cadastro::~cadastro(){ //o destrutor de cadastro tenta salvar os novos cadastros em um arquivo txt temporario, deletar o antigo e renomear o temporario para cadastro
+cadastro::~cadastro(){ //o destrutor de cadastro tenta salvar o estado atual do cadastro em um arquivo txt temporario, deletar o antigo e renomear o temporario para cadastro
+
     std::string nome, apelido, estatisticas, linha;
-    std::ofstream temporario("../data/temporario.txt");
+    std::ofstream temporario("../data/temporario.txt"); //Cria um arquivo temporário
+
+    //Para cada posição do meu cadastro, transforma as informações no padrão Nome: nome Apelido: apelido 0 0 0 0 0 0 e salva no arquivo, separados por quebra de linha
     if(temporario.is_open()){
         for(size_t i = 0; i < _MeuCadastro.size(); i++){
             linha="";
@@ -56,10 +76,12 @@ cadastro::~cadastro(){ //o destrutor de cadastro tenta salvar os novos cadastros
         }
         temporario.close();
 
+        //Deleta o arquivo antigo de cadastro
         if(remove("../data/cadastro.txt") != 0){
             std::cerr << "Erro ao deletar arquivo antigo de cadastro" << std::endl;
         }
 
+        //Renomeia temporário para cadastro
         if(rename("../data/temporario.txt", "../data/cadastro.txt") != 0){
             std::cerr << "Erro ao renomear novo arquivo de cadastro" << std::endl;
         }
@@ -69,9 +91,14 @@ cadastro::~cadastro(){ //o destrutor de cadastro tenta salvar os novos cadastros
     }   
 }
 
+//Retorna a posicao no vetor de jogadores ou -1 se o jogador nao existir
 int cadastro::VerificaApelido(std::string apelido){
+    std::string compara;
+    std::transform(apelido.begin(), apelido.end(), apelido.begin(), ::tolower); //compara tudo em minusculo, o apelido não é case sensitive
     for (size_t i = 0; i < _MeuCadastro.size(); i++){
-        if(_MeuCadastro[i].GetApelido() == apelido){
+        compara = _MeuCadastro[i].GetApelido();
+        std::transform(compara.begin(), compara.end(), compara.begin(), ::tolower);
+        if(compara == apelido){
             return i;
         }
     }
@@ -79,6 +106,7 @@ int cadastro::VerificaApelido(std::string apelido){
 }
 
 
+//Verifica se ja existe um jogador com esse apelido cadastrado, se não, cadastra o jogador
 void cadastro::CadastraJogador(std::string nome, std::string apelido){
     if(VerificaApelido(apelido) != -1){
         std::cout << "Erro: Apelido nao disponivel" << std::endl;
@@ -91,6 +119,7 @@ void cadastro::CadastraJogador(std::string nome, std::string apelido){
 }
 
 
+//Verifica se existe jogador com esse apelido cadastrado, se sim, deleta o jogador
 void cadastro::DeletaJogador(std::string apelido){
     int indice = VerificaApelido(apelido);
     if(indice != -1){
@@ -103,6 +132,7 @@ void cadastro::DeletaJogador(std::string apelido){
 }
 
 
+//Verifica se o novo apelido está disponivel, se sim, edita o apelido. 
 void cadastro::EditaJogador(std::string apelido, std::string novoapelido){
     int indice = VerificaApelido(novoapelido);
     if(indice == -1){
@@ -117,9 +147,16 @@ void cadastro::EditaJogador(std::string apelido, std::string novoapelido){
 }
 
 
+//Ordena os jogadores por ordem alfabética dos apelidos e impime na tela
 void cadastro::Imprime() {
     std::sort(_MeuCadastro.begin(), _MeuCadastro.end(), [](const jogador &j1, const jogador &j2){
-        return j1.GetApelido() < j2.GetApelido();
+        std::string apelido1 = j1.GetApelido();
+        std::string apelido2 = j2.GetApelido();
+
+        //importante transformar os apelidos para minusculas, todas as letras maiusculas tem precedencia, Z < a
+        std::transform(apelido1.begin(), apelido1.end(), apelido1.begin(), ::tolower);
+        std::transform(apelido2.begin(), apelido2.end(), apelido2.begin(), ::tolower);
+        return apelido1 < apelido2;
     });
 
     for(size_t i = 0; i < _MeuCadastro.size(); i++){
@@ -128,14 +165,52 @@ void cadastro::Imprime() {
 }
 
 
+//Exibe todos os apelidos na tela
 void cadastro::ExibeApelidos(){
     for(size_t i = 0; i < _MeuCadastro.size(); i++){
         std::cout<< _MeuCadastro[i].GetApelido() << std::endl;
     }
 }
 
-void cadastro::SetVD(int indice, int game){
-    _MeuCadastro[indice].SetEstatistica(game);
-}
-  
 
+//Altera as estatisticas de 2 jogadores para vitoria e derrota em um jogo
+void cadastro::SetVD(std::string playerV, std::string playerD, int game){
+    _MeuCadastro[VerificaApelido(playerV)].SetEstatistica(game);
+    game = game * -1;
+    _MeuCadastro[VerificaApelido(playerD)].SetEstatistica(game);
+}
+
+
+//Recebe dois apelidos e verifica se eles estão cadastrados
+bool cadastro::login(std::string &jogador1, std::string &jogador2, cadastro &meucadastro){
+    std::string login1, login2;
+
+    std::cout << "\n====================================\n";
+    std::cout << "Digite o apelido do Jogador 1: ";
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    getline(std::cin, login1);
+
+    int indice1 = meucadastro.VerificaApelido(login1);
+
+    if (indice1 == -1){
+        std::cout << "ERRO: Apelido: '" << login1 << "' não encontrado. Tente Novamente!!\n";
+        return false;
+    }
+
+    else{
+        std::cout << "\nDigite o apelido do Jogador 2: ";
+        getline(std::cin, login2);
+
+        int indice2 = meucadastro.VerificaApelido(login2);
+
+        if (indice2 == -1){
+            std::cout << "ERRO: Apelido: '" << login2 << "' não encontrado. Tente Novamente!!\n";
+            return false;
+        }
+    }
+
+    //Se os dois apelidos existem, atribui aos jogadores e retorna true
+    jogador1 = login1;
+    jogador2 = login2;
+    return true;
+}

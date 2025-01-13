@@ -3,6 +3,7 @@
 #include <string>
 #include <cmath>
 
+//construtor de jogador com nome e apelido
 jogador::jogador(std::string nome, std::string apelido) : _nome(nome), _apelido(apelido){
     for(int i=0; i < 3; i++){
         this->vitorias[i] = 0;
@@ -10,6 +11,8 @@ jogador::jogador(std::string nome, std::string apelido) : _nome(nome), _apelido(
     }
 }
 
+
+//construtor de jogador com nome apelido e estatisticas
 jogador::jogador(std::string nome, std::string apelido, int vitorias[], int derrotas[]) : _nome(nome), _apelido(apelido){
     for(int i=0; i < 3; i++){
         this->vitorias[i] = vitorias[i];
@@ -46,6 +49,7 @@ void jogador::SetApelido(std::string novoapelido){
     this->_apelido = novoapelido;
 }
 
+//Adiciona 1 em vitoria se é positivo e 1 em derrota se é negativo, cada posção do vetor representa um jogo
 void jogador::SetEstatistica(int V_D){
     if(V_D > 0){
         V_D--;

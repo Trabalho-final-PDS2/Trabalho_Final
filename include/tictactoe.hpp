@@ -1,4 +1,5 @@
 #include "board.hpp"
+#include "cadastro.hpp"
 #include <iostream>
 
 namespace game {
