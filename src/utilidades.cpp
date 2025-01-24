@@ -39,19 +39,20 @@ bool validacao_fluxo_linha(std::istringstream &fluxo, std::ofstream &erros, std:
     return true; // Indica que a linha é válida
 }
 
-std::string vazio(std::string palavra){
+bool vazio(std::string &palavra){
     if(palavra.find_first_not_of(" ") == std::string::npos){ //Evita apelidos vazios
         std::cout << "Erro: nome/apelido nao digitado" << std::endl;
         sleep(2);
-        return "ERROR";
+        return false;
     }
-    return palavra;
+    return true;
 }
 
-std::string valida_apelido(std::string linha){
-    std::string apelido;
+bool valida_apelido(std::string &linha, std::string &apelido){
     std::istringstream copia(linha); //Evita apelidos com mais de uma palavra
     copia >> apelido;
-    apelido = vazio(apelido);
-    return apelido;
+    if(!vazio(apelido)){
+        return false;
+    }
+    return true;
 }

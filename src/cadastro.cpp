@@ -200,7 +200,7 @@ bool cadastro::login(std::string &jogador1, std::string &jogador2, cadastro &meu
 
     std::string login1, login2;
 
-    std::cout << "\n====================================\n";
+    std::cout << "====================================\n";
     std::cout << "Digite o apelido do Jogador 1: ";
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     getline(std::cin, login1);

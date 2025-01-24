@@ -218,7 +218,7 @@ void reversi::PrintBoard(std::string jogador1, std::string jogador2){
         for(int j = 0; j < 8; j++){
             std::cout << " | "; //separadores do tabuleiro
             if (board[indice] == player1 || board[indice] == player2){
-                std::cout << (board[indice] == player1 ? "⚪" : "🔵"); //printa o simbolo do player na cor do playr
+                std::cout << (board[indice] == player1 ? "⚪" : "🔵"); //printa o simbolo do player na cor do player
             }
             else if(isValidAll(indice)){
                 std::cout << (indice <= 9 ? " " : "") << "\033[31m" << indice << "\033[0m"; //se não está ocupada mas é uma casa valida, printa o numero da casa na cor do player

@@ -18,10 +18,11 @@ void menu(){
 
 
 int modulo_cadastro(cadastro &meucadastro){
-    std::string nome, apelido, novoapelido, linha;
+    std::string linha;
     char comando;
     menu();
     while(std::cin >> linha){
+        std::string nome, apelido, novoapelido;
         std::istringstream input(linha);
         input.get(comando);
         limpa_tela();
@@ -33,14 +34,12 @@ int modulo_cadastro(cadastro &meucadastro){
             getchar();
             std::cout << "Digite o nome:" << std::endl;
             getline(std::cin, nome);
-            nome = vazio(nome); //Evita nomes vazios
-            if(nome == "ERROR"){
+            if(!vazio(nome)){//Evita nomes vazios
                 break;
             }
             std::cout << "Digite o apelido (apenas uma palavra permitida)" << std::endl;
             getline(std::cin, linha);
-            apelido = valida_apelido(linha);//Evita apelidos com mais de uma palavra e apelidos vazios
-            if(apelido == "ERROR"){
+            if(!valida_apelido(linha,apelido)){
                 break;
             }
             meucadastro.CadastraJogador(nome,apelido);
@@ -55,18 +54,17 @@ int modulo_cadastro(cadastro &meucadastro){
             meucadastro.ExibeApelidos();
             std::cout << "Digite o apelido para edicao (apenas uma palavra permitida)" << std::endl;
             getline(std::cin, linha);
-            apelido = valida_apelido(linha);//Evita apelidos com mais de uma palavra e apelidos vazio
-            if(apelido == "ERROR"){
+            if(!valida_apelido(linha,apelido)){
                 break;
             }
             if(meucadastro.VerificaApelido(apelido) == -1){ //Verifica se o apelido está cadastrado
                 std::cout << "Erro apelido inexistente" << std::endl;
+                sleep(2);
                 break;
             }
             std::cout << "Digite o novo apelido (apenas uma palavra permitida)" << std::endl;
             getline(std::cin, linha);
-            novoapelido = valida_apelido(linha);
-            if(apelido == "ERROR"){
+            if(!valida_apelido(linha,novoapelido)){
                 break;
             }
             meucadastro.EditaJogador(apelido,novoapelido);
@@ -81,8 +79,7 @@ int modulo_cadastro(cadastro &meucadastro){
             meucadastro.ExibeApelidos();
             std::cout << "Digite o apelido para deletar (apenas uma palavra permitida)" << std::endl;
             getline(std::cin, linha);
-            apelido = valida_apelido(linha);//Evita apelidos com mais de uma palavra e apelidos vazio
-            if(apelido == "ERROR"){
+            if(!valida_apelido(linha,apelido)){//Evita apelidos com mais de uma palavra e apelidos vazios
                 break;
             }
             meucadastro.DeletaJogador(apelido);
