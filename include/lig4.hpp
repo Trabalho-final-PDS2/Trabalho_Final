@@ -2,7 +2,10 @@
 #define LIG4_HPP
 
 #include "board.hpp"
+#include "cadastro.hpp"
 #include <map>
+
+namespace game{ 
 
 class Lig4 : public board::Board {
     private:
@@ -22,8 +25,10 @@ class Lig4 : public board::Board {
         bool CheckWin();
         bool CheckTie() override;
         void CheckGameStatus() override;
-        void runGame();
+        void runGame(std::string& jogador1, std::string& jogador2, cadastro& meuCadastro);
     };
+
+}
     
 #endif
 

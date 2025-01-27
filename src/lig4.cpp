@@ -1,18 +1,17 @@
 // lig4.cpp
 #include "lig4.hpp"
-#include <iostream>
 #include "utilidades.hpp"
+#include <iostream>
+#include <string>
 
-
-    Lig4::Lig4() : Board(ROWS * COLS, 'X', 'O'), currentPlayer(true), gameOver(false) {
+namespace game{
+    Lig4::Lig4() : board::Board(ROWS * COLS, 'X', 'O'), currentPlayer(true), gameOver(false) {
         for(int i = 0; i < ROWS * COLS; i++){
             board[i] = '_'; 
         }
     }
 
     void Lig4::PrintBoard() {
-        limpa_tela();
-
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < COLS; j++) {
                 std::cout << "|" << board[i * COLS + j] << "|";
@@ -27,13 +26,13 @@
                 return row;
             }
         }
+        this->colunaCheia[col] = true;
         return -1; // Coluna cheia
     }
 
-    void Lig4::playerMove(int position, bool isPlayer1) {
+    void Lig4::playerMove(int position, bool currentPlayer) {
         if (position < 1 || position > COLS) {
             std::cout << "Erro: coluna inválida\n";
-            sleep(2);
             return;
         }
 
@@ -42,12 +41,11 @@
 
         if (row == -1) {
             std::cout << "Erro: coluna cheia\n";
-            sleep(2);
             return;
         }
 
-        board[row * COLS + col] = (isPlayer1 ? player1 : player2);
-        CheckGameStatus();
+        board[row * COLS + col] = (this->currentPlayer ? player1 : player2);
+        this->CheckGameStatus();
     }
 
     bool Lig4::CheckWin() {
@@ -105,47 +103,48 @@
     }
 
     bool Lig4::CheckTie() {
-        for (int i = 0; i < ROWS * COLS; i++) {
-            if (board[i] == '-') {
+        for(int i = 0; i < COLS; i++){
+            if(!this->colunaCheia[i]){
                 return false;
             }
         }
-        return CheckWin();
+
+        return true;
     }
 
     void Lig4::CheckGameStatus() {
         if (CheckWin()) {
-            std::cout << "Jogador " << (currentPlayer ? 1 : 2) << " venceu!\n";
-            sleep(2);
+            std::cout << "Jogador " << (this->currentPlayer ? 1 : 2) << " venceu!\n";
             gameOver = true;
         }
         else if (CheckTie()) {
             std::cout << "Empate!\n";
-            sleep(2);
             gameOver = true;
         }
         else {
-            currentPlayer = !currentPlayer;
+            this->currentPlayer = !this->currentPlayer;
         }
     }
 
-    void Lig4::runGame(){
-        bool isPlayer1 = true;
+    void Lig4::runGame(std::string& jogador1, std::string& jogador2, cadastro& meuCadastro){
         int jogada;
 
         while (true) {
             this->PrintBoard();
             
-            std::cout << "Jogador " << (isPlayer1 ? "1" : "2") << ", faça sua jogada (1-7): ";
+            std::cout << "Jogador " << (this->currentPlayer ? jogador1 : jogador2) << ", faça sua jogada (1-7): ";
             std::cin >> jogada;
             
-            this->playerMove(jogada, isPlayer1);
-            
-            if (this->CheckWin()) {
+            this->playerMove(jogada, this->currentPlayer);
+    
+            if (this->gameOver) {
+                this->currentPlayer? 
+                    meuCadastro.SetVD(jogador1, jogador2, 2) :
+                    meuCadastro.SetVD(jogador2, jogador1, 2);
                 this->PrintBoard();
                 break;
             }
             
-            isPlayer1 = !isPlayer1;
         }
     }
+}
