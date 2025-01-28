@@ -144,7 +144,7 @@ Regras principais:
    - **Usando CMake**:
      ```bash
      cd Trabalho_Final
-     make
+     make (caso não seja possível compilar de primeira, use um make clean e tente o make novamente)
      cd bin
      ./login
      ````
