@@ -226,25 +226,29 @@ void cadastro::Ranking() {
 
     // Exibe o ranking completo
     for(size_t i = 0; i < _MeuCadastro.size(); i++) {
-
-        std::cout << _MeuCadastro[i].GetApelido() << " " << _MeuCadastro[i].GetVitoria(jogo);
+        if(_MeuCadastro[i].GetVitoria(jogo) != 0){
+            std::cout << _MeuCadastro[i].GetApelido() << " " << _MeuCadastro[i].GetVitoria(jogo);
         
-        if(i == 0) { 
-            std::cout << " 🏅";
+            if(i == 0) { 
+                std::cout << " 🏅";
+            }
+
+            if(i == 1) { 
+                std::cout << " 🥈";
+            }
+
+            if(i == 2) { 
+                std::cout << " 🥉";
+            }
+
+            std::cout << std::endl;  // Garante a quebra de linha para cada jogador
         }
 
-        if(i == 1) { 
-            std::cout << " 🥈";
-        }
-
-        if(i == 2) { 
-            std::cout << " 🥉";
-        }
-
-        std::cout << std::endl;  // Garante a quebra de linha para cada jogador
     }
 
-    sleep(5);  // Aguarda 5 segundos para a tela não fechar imediatamente
+    std::cout << std::endl << "Aperte Enter para voltar" << std::endl;
+    getchar();
+    std::cin.get();
 }
 
 

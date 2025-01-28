@@ -90,7 +90,9 @@ int modulo_cadastro(cadastro &meucadastro){
         case 'i':{
             limpa_tela();
             meucadastro.Imprime();
-            sleep(5);
+            std::cout << "Aperte Enter para voltar" << std::endl;
+            getchar();
+            std::cin.get();
             break;
         }
 

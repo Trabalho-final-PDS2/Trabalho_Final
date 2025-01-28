@@ -148,6 +148,12 @@ Regras principais:
      cd bin
      ./login
      ````
+4. **Testes**:
+   - **Usando CMake**:
+     ```bash
+     cd Trabalho_Final
+     make test
+     ````
 
 ## 🎮Como Jogar
 1. Execute o programa:
