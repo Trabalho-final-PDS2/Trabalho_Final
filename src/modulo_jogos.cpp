@@ -63,8 +63,6 @@ int modulo_jogos(std::string jogador1, std::string jogador2, cadastro &meucadast
             return 1;
         }
 
-
-        //Retorna 3 ao menu anterior, que finaliza o programa
         else if (comando == 6){
             meucadastro.Ranking();    
         }
