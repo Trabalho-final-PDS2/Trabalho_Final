@@ -112,19 +112,19 @@ Regras principais:
   - Empate: Se todas as células forem preenchidas e nenhum jogador tiver formado uma linha de três símbolos, o jogo termina empatado.
   - Fim imediato: Assim que um jogador forma uma linha de três símbolos consecutivos, o jogo termina imediatamente.
 
-  ## Premissas Assumidas
+  ## 📜Premissas Assumidas
 - O sistema foi projetado para ser executado em ambientes Linux ou Windows com suporte ao padrão C++17.
 - A entrada de dados será confiável e não será necessário tratamento extensivo de erros.
 - Todas as informações do jogador e estatísticas são manipuladas em memória ou salvas em arquivos simples.
 - A interação será feita exclusivamente por meio de uma interface de linha de comando (CLI).
 
-## Decisões de Projeto
+## ⚙️Decisões de Projeto
 - **Hierarquia de Classes**: Uma estrutura base foi implementada para os jogos, permitindo reutilização de lógica comum, como inicialização de tabuleiros e controle de turnos.
 - **Persistência de Dados**: Não foi utilizado banco de dados, mas as informações podem ser salvas em arquivos de texto.
 - **Reutilização de Código**: Funções comuns foram abstraídas em classes base e métodos genéricos.
 - **Documentação e Modularidade**: O projeto foi dividido em módulos claros, com documentação detalhada para facilitar a manutenção e extensão futura.
 
-## Configuração do Ambiente
+## 💻Configuração do Ambiente
 1. **Instale o Compilador**:
    - **Linux**:
      ```bash
@@ -149,9 +149,10 @@ Regras principais:
      ./login
      ````
 
-## Como Jogar
+## 🎮Como Jogar
 1. Execute o programa:
    ```bash
+   cd Trabalho_Final
    ./login
    ```
 2. Escolha a opção desejada no menu:
