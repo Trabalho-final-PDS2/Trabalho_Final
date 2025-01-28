@@ -11,7 +11,7 @@
 cadastro::cadastro(){ // o construtor de cadastro tenta pegar os cadastros salvos no arquivo txt e inicaliza-los
     std::ifstream cadastro("../data/cadastro.txt");
     std::ofstream erros("../data/backup_erros.txt", std::ios::app);
-    bool ErroDetectado = false;;
+    bool ErroDetectado = false;
     if (!cadastro.is_open()) {
     std::cerr << "Erro: Não foi possível abrir '../data/cadastro.txt'" << std::endl;
     perror("Detalhes do erro");  // Exibe o erro do sistema
@@ -204,7 +204,7 @@ void cadastro::Ranking() {
          if (vitoria1 == vitoria2) {
         // Se as vitórias forem iguais, ordena pelo apelido
         return j1.GetApelido() < j2.GetApelido();
-    }
+        }
 
         return vitoria1 > vitoria2;  // Ordena pela vitória
     });

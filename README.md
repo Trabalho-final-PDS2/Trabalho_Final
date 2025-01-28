@@ -161,6 +161,96 @@ Regras principais:
    - Sair.
 3. Siga as instruções exibidas para cada módulo.
 
+# Cartões CRC Atualizados
+
+## Cartão CRC 1: Classe `Jogador`
+
+### **Responsabilidades**
+- **Armazenar informações do jogador:**
+  - Nome.
+  - Apelido.
+- **Gerenciar estatísticas:**
+  - Número de vitórias.
+  - Número de derrotas.
+
+### **Colaborações**
+- O módulo de cadastro utiliza esta classe para criar e gerenciar jogadores.
+
+---
+
+## Cartão CRC 2: Classe `Cadastro`
+
+### **Responsabilidades**
+- **Cadastrar novos jogadores.**
+- **Buscar jogadores pelo apelido.**
+- **Atualizar estatísticas de vitórias e derrotas de um jogador.**
+- **Listar jogadores cadastrados.**
+
+### **Colaborações**
+- Interage com a classe `Jogador` para criar e gerenciar jogadores.
+- Fornece dados de jogadores para as classes dos jogos (ex.: Reversi, Lig4, TicTacToe).
+
+---
+
+## Cartão CRC 3: Classe Abstrata `Board`
+
+### **Responsabilidades**
+- **Fornecer a base para os jogos de tabuleiro:**
+  - Inicializar o tabuleiro.
+  - Controlar turnos.
+  - Validar jogadas.
+
+### **Colaborações**
+- É a classe base para os jogos específicos (Reversi, Lig4, TicTacToe).
+- Recebe informações sobre os jogadores do módulo `Cadastro`.
+
+---
+
+## Cartão CRC 4: Classe `Reversi`
+
+### **Responsabilidades**
+- **Implementar as regras do jogo Reversi:**
+  - Inicializar o tabuleiro 8x8 com a configuração inicial.
+  - Realizar jogadas válidas e capturar peças.
+  - Verificar condições de vitória ou empate.
+
+### **Colaborações**
+- Herda da classe `Board` para a lógica genérica de tabuleiro.
+- Interage com o módulo `Cadastro` para obter os jogadores e atualizar estatísticas ao final da partida.
+
+---
+
+## Cartão CRC 5: Classe `Lig4`
+
+### **Responsabilidades**
+- **Implementar as regras do jogo Lig4:**
+  - Inicializar o tabuleiro 7x6.
+  - Realizar jogadas válidas (inserir peças na coluna disponível).
+  - Verificar condições de vitória ou empate.
+
+### **Colaborações**
+- Herda da classe `Board` para a lógica genérica de tabuleiro.
+- Interage com o módulo `Cadastro` para obter os jogadores e atualizar estatísticas ao final da partida.
+
+---
+
+## Cartão CRC 6: Classe `TicTacToe`
+
+### **Responsabilidades**
+- **Implementar as regras do jogo da velha:**
+  - Inicializar o tabuleiro 3x3.
+  - Gerenciar jogadas válidas.
+  - Verificar condições de vitória ou empate.
+
+### **Colaborações**
+- Herda da classe `Board` para a lógica genérica de tabuleiro.
+- Interage com o módulo `Cadastro` para obter os jogadores e atualizar estatísticas ao final da partida.
+
+---
+
+Com esta estrutura, cada jogo (Reversi, Lig4, TicTacToe) é autônomo em sua lógica, enquanto o módulo de cadastro gerencia os jogadores e suas estatísticas, promovendo modularidade e separação de responsabilidades.
+
+
 
 
 
