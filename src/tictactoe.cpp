@@ -84,7 +84,7 @@ namespace game {
     void TicTacToe::RunGame(std::string& jogador1, std::string& jogador2, cadastro& meuCadastro) {
             limpa_tela();
             int position;
-            while (!CheckWin())
+            while (!CheckWin() && !CheckTie())
             {
                 std::cout << std::endl;
                 PrintBoard();
