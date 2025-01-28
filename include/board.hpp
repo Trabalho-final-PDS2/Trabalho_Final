@@ -32,6 +32,7 @@ namespace board {
         virtual bool CheckTie() = 0;  // Verificação de empate
         virtual void CheckGameStatus() = 0;
     };
+
 }
 
 #endif // BOARD_HPP
