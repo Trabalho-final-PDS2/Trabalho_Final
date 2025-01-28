@@ -8,12 +8,13 @@
 void menu(){
     limpa_tela();
     std::cout<< "Digite:" <<std::endl;
-    std::cout<< "c -> Cadastrar usuário" <<std::endl;
-    std::cout<< "e -> Editar usuário" <<std::endl;
-    std::cout<< "d -> Deletar usuário" <<std::endl;
-    std::cout<< "i -> Imprimir usuários" <<std::endl;
-    std::cout<< "m -> Voltar para o menu inicial" <<std::endl;
-    std::cout<< "f -> Finalizar" <<std::endl;
+    std::cout<< "C -> Cadastrar usuário" <<std::endl;
+    std::cout<< "E -> Editar usuário" <<std::endl;
+    std::cout<< "D -> Deletar usuário" <<std::endl;
+    std::cout<< "I -> Imprimir usuários" <<std::endl;
+    std::cout<< "R -> Exibir o Ranking" <<std::endl;
+    std::cout<< "M -> Voltar para o menu inicial" <<std::endl;
+    std::cout<< "F -> Finalizar" <<std::endl;
 }
 
 
@@ -54,7 +55,7 @@ int modulo_cadastro(cadastro &meucadastro){
             meucadastro.ExibeApelidos();
             std::cout << "Digite o apelido para edicao (apenas uma palavra permitida)" << std::endl;
             getline(std::cin, linha);
-            if(!valida_apelido(linha,apelido)){
+            if(!valida_apelido(linha,apelido)){//evita apelidos vazios e com mais de uma palavra
                 break;
             }
             if(meucadastro.VerificaApelido(apelido) == -1){ //Verifica se o apelido está cadastrado
@@ -103,6 +104,11 @@ int modulo_cadastro(cadastro &meucadastro){
         //Retorna 3 pra o menu anterior, que finaliza o programa
         case 'f':{
             return 3;
+        }
+
+        case 'r':{
+            meucadastro.Ranking();
+            break;
         }
 
         default:{

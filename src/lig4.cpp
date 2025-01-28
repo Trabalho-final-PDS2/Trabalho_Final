@@ -114,11 +114,17 @@ namespace game{
 
     void Lig4::CheckGameStatus() {
         if (CheckWin()) {
+            limpa_tela();
+            PrintBoard();
             std::cout << "Jogador " << (this->currentPlayer ? 1 : 2) << " venceu!\n";
+            sleep(2);
             gameOver = true;
         }
         else if (CheckTie()) {
+            limpa_tela();
+            PrintBoard();
             std::cout << "Empate!\n";
+            sleep(2);
             gameOver = true;
         }
         else {
@@ -130,6 +136,7 @@ namespace game{
         int jogada;
 
         while (true) {
+            limpa_tela();
             this->PrintBoard();
             
             std::cout << "Jogador " << (this->currentPlayer ? jogador1 : jogador2) << ", faça sua jogada (1-7): ";

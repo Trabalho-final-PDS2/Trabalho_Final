@@ -13,7 +13,7 @@ namespace game {
         bool CheckWin();
         bool CheckTie();
         void CheckGameStatus();
-
+        void RunGame(std::string& jogador1, std::string& jogador2, cadastro& meuCadastro);
     private:
        
         bool gameOver = false;  // Indica se o jogo terminou

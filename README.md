@@ -20,20 +20,15 @@
 - [Premissas Assumidas](#premissas-assumidas)
 - [Decisões de Projeto](#decisões-de-projeto)
 - [Configuração do Ambiente](#configuração-do-ambiente)
+- [Como jogar](#como-jogar)
 
 ## 🔭 Visão Geral
 
-O objetivo deste trabalho é desenvolver um sistema usando o paradigma de orientação a objetos para
-implementar alguns jogos de tabuleiro, especialmente o Reversi, o Lig 4 e o jogo da velha. Você
-deverá implementar uma hierarquia de classes que permita a criação de diferentes jogos, bem como
-um sistema de cadastro de jogadores que permita a manutenção de estatísticas. Além da modelagem
-e implementação, você também deverá usar ferramentas que permitam o controle de versão e
-desenvolvimento em conjunto, a realização de testes e criação da documentação
-Lembre-se, o objetivo não é apenas escrever um programa funcional, mas desenvolver um sistema
-confiável, reutilizável e de fácil manutenção e extensão! Logo, tente aplicar todos os conceitos de
-POO, modularidade e corretude vistos em sala de aula. Também serão avaliados critérios como
-criatividade na solução, assim como a possível implementação de funcionalidades extras.
-É importante ressaltar que o projeto conta também com:
+Nosso objetivo com este trabalho é desenvolver um sistema utilizando o paradigma de orientação a objetos para implementar alguns jogos de tabuleiro, especialmente o Reversi, o Lig 4 e o jogo da velha. Vamos implementar uma hierarquia de classes que permita a criação de diferentes jogos, bem como um sistema de cadastro de jogadores que possibilite a manutenção de estatísticas.
+Além da modelagem e implementação, utilizaremos ferramentas que permitam o controle de versão e desenvolvimento colaborativo, a realização de testes e a criação da documentação.
+Devemos lembrar que o objetivo não é apenas escrever um programa funcional, mas desenvolver um sistema confiável, reutilizável e de fácil manutenção e extensão. Por isso, aplicaremos todos os conceitos de POO, modularidade e corretude abordados em sala de aula.
+Também buscamos explorar a criatividade nas soluções propostas, além de nos esforçarmos para implementar funcionalidades extras que possam agregar valor ao sistema.
+
 
 - Login
 - Criação de Usuário
@@ -41,12 +36,16 @@ criatividade na solução, assim como a possível implementação de funcionalid
 - Execução de Partidas
 - Testes Unitários
 - Extras
+    - Menu interativo
+    - Animações do jogo Reversi  
+    - Ranking dos vitoriosos
 
-Foi levado em consideração o seguinte Diagrama de Caso de Uso:
+## Foi levado em consideração o seguinte Diagrama de Caso de Uso:
 
+![Diagrama de Caso de Uso](data/diagrama_caso_de_uso_refeito.png)
 
-A documentação com todos os detalhes das rotas se encontra em /api e segue da seguinte forma:
-
+## A documentação com todos os detalhes das rotas se encontra em /api e segue da seguinte forma:
+A documentação do projeto foi gerada utilizando a ferramenta Doxygen e pode ser encontrada na pasta data, disponível nos formatos HTML e LaTeX. O formato HTML oferece uma navegação simples e intuitiva, enquanto o LaTeX pode ser usado para gerar documentos PDF detalhados. Essa documentação inclui detalhes sobre as classes, métodos e funcionalidades implementadas no sistema.
 
 ## 📋 Critérios de avaliação 
 Foram seguidos os seguintes critérios:
@@ -54,8 +53,6 @@ Foram seguidos os seguintes critérios:
 - [x] Modelagem
 - [x] Clareza e legibilidade
 - [x] Documentação amigavel
-- [x] Implementação correta, sem bugs
-- [x] Uso das técnicas de POO
 - [x] Implementação correta, sem bugs
 - [x] Uso das técnicas de POO
 
@@ -115,6 +112,53 @@ Regras principais:
   - Empate: Se todas as células forem preenchidas e nenhum jogador tiver formado uma linha de três símbolos, o jogo termina empatado.
   - Fim imediato: Assim que um jogador forma uma linha de três símbolos consecutivos, o jogo termina imediatamente.
 
+  ## Premissas Assumidas
+- O sistema foi projetado para ser executado em ambientes Linux ou Windows com suporte ao padrão C++17.
+- A entrada de dados será confiável e não será necessário tratamento extensivo de erros.
+- Todas as informações do jogador e estatísticas são manipuladas em memória ou salvas em arquivos simples.
+- A interação será feita exclusivamente por meio de uma interface de linha de comando (CLI).
+
+## Decisões de Projeto
+- **Hierarquia de Classes**: Uma estrutura base foi implementada para os jogos, permitindo reutilização de lógica comum, como inicialização de tabuleiros e controle de turnos.
+- **Persistência de Dados**: Não foi utilizado banco de dados, mas as informações podem ser salvas em arquivos de texto.
+- **Reutilização de Código**: Funções comuns foram abstraídas em classes base e métodos genéricos.
+- **Documentação e Modularidade**: O projeto foi dividido em módulos claros, com documentação detalhada para facilitar a manutenção e extensão futura.
+
+## Configuração do Ambiente
+1. **Instale o Compilador**:
+   - **Linux**:
+     ```bash
+     sudo apt update
+     sudo apt install build-essential g++
+     ```
+   - **Windows**:
+     - Instale o MinGW ou utilize o WSL com suporte a compiladores Linux.
+
+2. **Clone o Repositório**:
+   ```bash
+   git clone https://github.com/Trabalho-final-PDS2/Trabalho_Final.git
+   cd Trabalho_Final
+   ```
+
+3. **Compilação e Execução**:
+   - **Usando CMake**:
+     ```bash
+     cd Trabalho_Final
+     make
+     cd bin
+     ./login
+     ````
+
+## Como Jogar
+1. Execute o programa:
+   ```bash
+   ./login
+   ```
+2. Escolha a opção desejada no menu:
+   - Jogar.
+   - Menu de Cadastros.
+   - Sair.
+3. Siga as instruções exibidas para cada módulo.
 
 
 

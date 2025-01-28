@@ -7,9 +7,10 @@
 #include "board.hpp"
 #include "cadastro.hpp"
 
-class reversi : public board::Board{
+namespace game{
+    class Reversi : public board::Board{
     public:
-    reversi();
+    Reversi();
     bool currentPlayer;
 
     //verificação de jogada válida em todas as direções
@@ -27,7 +28,7 @@ class reversi : public board::Board{
     bool CanIPlay ();
     void Score (std::string jogador1, std::string jogador2);
     void Inicio();
-    void JogarReversi(std::string jogador1, std::string jogador2, cadastro &meucadastro, reversi &Reversi);
+    void JogarReversi(std::string jogador1, std::string jogador2, cadastro &meucadastro, Reversi &reversi);
     void PrintBoard(std::string jogador1, std::string jogador2);
     int CheckWin(std::string jogador1, std::string jogador2);
     void AnimacaoCaptura();
@@ -38,5 +39,7 @@ class reversi : public board::Board{
 
     // Método para alternar o jogador
     void CheckGameStatus() override;
-};
+    };
+}
+
 #endif

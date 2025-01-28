@@ -80,4 +80,51 @@ namespace game {
             currentPlayer = !currentPlayer;
         }
     }
+
+    void TicTacToe::RunGame(std::string& jogador1, std::string& jogador2, cadastro& meuCadastro) {
+            limpa_tela();
+            int position;
+            while (!CheckWin())
+            {
+                std::cout << std::endl;
+                PrintBoard();
+                std::cout << std::endl;
+                std::cout << "Jogador " << (currentPlayer ? jogador1 : jogador2) << ", entre com a posição (0-8): ";
+                std::cin >> position;
+
+                //evita que position receba char por exemplo
+                if (validacao_entrada()) {
+                    continue; // Volta para o início do loop
+                }
+
+                // Verifica se a posição é válida
+                if (position < 0 || position >= 9)
+                {
+                    std::cout << std::endl;
+                    std::cout << "Posição inválida! Tente novamente.\n";
+                    sleep(2);
+                    continue;
+                }
+
+                // Realiza o movimento
+                playerMove(position, currentPlayer);
+
+                // Verifica o status do jogo
+                if (CheckWin())
+                {   
+                    PrintBoard();                                    
+                    std::cout << std::endl;
+                    std::cout << "Jogador " << (currentPlayer ? jogador1 : jogador2) << " venceu!\n";
+                    meuCadastro.SetVD(currentPlayer ? jogador1 : jogador2,currentPlayer ? jogador2 : jogador1, 1);
+                    sleep(2);
+                }
+                else if (CheckTie())
+                {
+                    PrintBoard();
+                    std::cout << std::endl;
+                    std::cout << "Empate!\n";
+                    sleep(2);
+                }
+            }
+    }
 }

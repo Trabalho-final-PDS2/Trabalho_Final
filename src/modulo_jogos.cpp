@@ -25,7 +25,8 @@ int modulo_jogos(std::string jogador1, std::string jogador2, cadastro &meucadast
         std::cout << "3 - Reversi\n";
         std::cout << "4 - Ir para o menu de cadastros\n";
         std::cout << "5 - Voltar para o menu inicial\n";
-        std::cout << "6 - Sair\n";
+        std::cout << "6 - Exibir Ranking\n";
+        std::cout << "7 - Sair\n";
         std::cout << "Digite a opção desejada: ";
         std::cin >> comando;
         
@@ -37,64 +38,19 @@ int modulo_jogos(std::string jogador1, std::string jogador2, cadastro &meucadast
         //Jogar jogo da velha
         if (comando == 1)
         {
-            limpa_tela();
             game::TicTacToe games;
-            int position;
-            while (true)
-            {
-                std::cout << std::endl;
-                games.PrintBoard();
-                std::cout << std::endl;
-                std::cout << "Jogador " << (games.currentPlayer ? jogador1 : jogador2) << ", entre com a posição (0-8): ";
-                std::cin >> position;
-
-                //evita que position receba char por exemplo
-                if (validacao_entrada()) {
-                    continue; // Volta para o início do loop
-                }
-
-                // Verifica se a posição é válida
-                if (position < 0 || position >= 9)
-                {
-                    std::cout << std::endl;
-                    std::cout << "Posição inválida! Tente novamente.\n";
-                    sleep(2);
-                    continue;
-                }
-
-                // Realiza o movimento
-                games.playerMove(position, games.currentPlayer);
-
-                // Verifica o status do jogo
-                if (games.CheckWin())
-                {   
-                    std::cout << std::endl;
-                    games.PrintBoard();                                    std::cout << std::endl;
-                    std::cout << "Jogador " << (games.currentPlayer ? jogador1 : jogador2) << " venceu!\n";
-                    sleep(2);
-                    break;
-                }
-                else if (games.CheckTie())
-                {
-                    std::cout << std::endl;
-                    games.PrintBoard();
-                    std::cout << std::endl;
-                    std::cout << "Empate!\n";
-                    sleep(2);
-                    break;
-                }
-            }
+            games.RunGame(jogador1, jogador2, meucadastro);
         }
 
         else if (comando == 2){
-            Lig4 lig4;
-            lig4.runGame();    
+            game::Lig4 lig4;
+            lig4.runGame(jogador1, jogador2, meucadastro);    
         }
 
         //Jogar Reversi
         else if (comando == 3){
-            reversi Reversi;
-            Reversi.JogarReversi(jogador1, jogador2, meucadastro, Reversi);
+            game::Reversi reversi;
+            reversi.JogarReversi(jogador1, jogador2, meucadastro, reversi);
         }
 
         //Retorna 2 para o menu anterior, que troca para o menu de cadastros
@@ -110,9 +66,13 @@ int modulo_jogos(std::string jogador1, std::string jogador2, cadastro &meucadast
 
         //Retorna 3 ao menu anterior, que finaliza o programa
         else if (comando == 6){
-        return 3;
+            meucadastro.Ranking();    
         }
 
+        //Retorna 3 ao menu anterior, que finaliza o programa
+        else if (comando == 7){
+        return 3;
+        }
 
         else{
             std::cout << "ERRO: Opção Inválida!!\n";

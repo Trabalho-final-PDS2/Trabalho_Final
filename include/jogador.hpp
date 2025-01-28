@@ -14,6 +14,7 @@ class jogador{
     std::string GetNome() const;
     std::string GetApelido() const;
     std::string GetEstatisticas() const;
+    int GetVitoria(int jogo) const;
     void SetNome(std::string nome);
     void SetApelido(std::string novoapelido);
     void SetEstatistica(int V_D);

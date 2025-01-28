@@ -28,6 +28,10 @@ std::string jogador::GetApelido() const {
     return this->_apelido;
 }
 
+int jogador::GetVitoria(int jogo) const {
+    return this->vitorias[jogo-1];
+}
+
 std::string jogador::GetEstatisticas() const { //as estatisticas sao passadas em string pois são usadas para salvar no arquivo txt
     std::string estatisticas="";
 

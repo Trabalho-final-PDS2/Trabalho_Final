@@ -177,6 +177,76 @@ void cadastro::Imprime() {
     }
 }
 
+void cadastro::Ranking() {
+    limpa_tela();
+    int jogo;
+    std::cout << "Escolha de Qual Jogo Deseja ver o ranking: \n" << std::endl;
+    std::cout << "1 - Jogo da Velha\n";
+    std::cout << "2 - Lig4\n";
+    std::cout << "3 - Reversi\n" << std::endl;
+    std::cin >> jogo;
+
+    if(validacao_entrada()){
+        return;
+    }
+
+    if(jogo < 1 || jogo > 3){
+    std::cout << "Erro: jogo inexistente" << std::endl;
+    sleep(2);
+    return;
+    }
+
+    std::sort(_MeuCadastro.begin(), _MeuCadastro.end(), [jogo](const jogador &j1, const jogador &j2){
+        int vitoria1 = j1.GetVitoria(jogo);
+        int vitoria2 = j2.GetVitoria(jogo);
+
+         if (vitoria1 == vitoria2) {
+        // Se as vitórias forem iguais, ordena pelo apelido
+        return j1.GetApelido() < j2.GetApelido();
+    }
+
+        return vitoria1 > vitoria2;  // Ordena pela vitória
+    });
+
+    limpa_tela();
+
+    std::cout << "Ranking dos melhores jogadores do ";
+    if(jogo == 1){
+        std::cout << "Jogo da Velha:" << std::endl;
+    }
+    if(jogo == 2){
+        std::cout << "Lig4:" << std::endl;
+    }
+    if(jogo == 3){
+        std::cout << "Reversi:" << std::endl;
+    }
+
+    std::cout << std::endl;
+
+    // Exibe o ranking completo
+    for(size_t i = 0; i < _MeuCadastro.size(); i++) {
+
+        std::cout << _MeuCadastro[i].GetApelido() << " " << _MeuCadastro[i].GetVitoria(jogo);
+        
+        if(i == 0) { 
+            std::cout << " 🏅";
+        }
+
+        if(i == 1) { 
+            std::cout << " 🥈";
+        }
+
+        if(i == 2) { 
+            std::cout << " 🥉";
+        }
+
+        std::cout << std::endl;  // Garante a quebra de linha para cada jogador
+    }
+
+    sleep(5);  // Aguarda 5 segundos para a tela não fechar imediatamente
+}
+
+
 
 //Exibe todos os apelidos na tela
 void cadastro::ExibeApelidos(){
